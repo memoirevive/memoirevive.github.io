@@ -1,0 +1,143 @@
+@font-face {
+    font-family: 'Raleway';
+    src: url('Raleway-Medium.woff2') format('woff2');
+    font-style: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('Raleway-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('Raleway-ExtraBold.woff2') format('woff2');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+	margin: 0;
+	background-color: #000011;
+	font-family: Raleway;
+	font-weight: 500;
+	font-size: 1.5em;
+}
+a {
+	color:white;
+	text-decoration: none;
+}
+.context { 
+  	position: absolute; 
+  	z-index: 999; 
+  	color: white;
+  	padding: 10px;
+  	font-weight: 600;
+}
+ #context_top_right {
+	right: 0;
+}
+ #context_bottom_left {
+	bottom: 0;
+}
+#context_bottom_right {
+	bottom: 0;
+	right: 0;
+}
+#context_top_center {
+	top: 0;
+ 	left: 50%;
+        transform: translate(-50%, 0);
+}
+#context_bottom_center {
+	bottom: 0;
+ 	left: 50%;
+        transform: translate(-50%, 0);
+}
+#context_bottom_center img {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+#toggle {
+	display: none;
+	z-index: -999;
+	cursor:pointer;
+	top: 50%;
+	right: 10px;
+	padding:0;
+        transform: translate(0, -50%);
+        width: 15px;
+        height: 15px;
+        background-color: #4f6cf0;
+       	font-weight: 400;
+}
+#popup {
+  	display:none;
+  	z-index: -9999;
+	padding: 20px;
+	font-size: 1.3em;
+	width: 420px;
+	height: 420px;
+	background-color: #4f6cf0; 
+	text-align: center;
+	top: 50%;
+ 	left: 50%;
+        transform: translate(-50%, -50%);
+}
+#text {
+	margin-top: 80px;
+}
+#cross {
+	position: absolute;
+	top: 0;
+	right: 0;
+        transform: translate(-25%, -25%);
+	font-size: 1.3em;	
+}
+#typewriter {
+	border-right: .05em solid;
+	animation: caret 1s steps(1) infinite;
+}
+@keyframes caret {
+	50% {
+          border-color: transparent;
+	}
+}
+.small {
+	font-size: 0.7em;
+}
+#reload {
+	width: 30px;
+}
+
+@media all and (max-width: 900px)
+{
+  body {
+	font-size: 1.2em;
+  }
+  .small {
+        font-size: 0.6em;
+  }
+  #popup {
+  	padding:20px;
+	font-size: 16pt;
+	width: 270px;
+	height: 270px;
+  }
+  #text {
+	margin-top: 40px;
+  }
+  #cross {
+  	font-size: 1.6em;
+        transform: translate(-25%, -20%);
+  }
+  #context_bottom_center img {
+	width: 20px;
+	vertical-align: bottom;
+  }
+}

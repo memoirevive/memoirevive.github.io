@@ -1,0 +1,259 @@
+<html>
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="./style.css" rel="stylesheet">
+  <script src="./globe.gl.min.js"></script>
+  <script src="./flights.js"></script>
+</head>
+
+<body>
+  <!-- Flights information containers-->
+  <div class="context" id="context_top_left"></div>
+  <div class="context" id="context_top_right" align="right"></div>
+  <div class="context" id="context_bottom_left">
+     <span id="timeCounter" class="value" max="0" style="display:none">0</span>
+     <span id="time">0h00</span>
+  </div>
+  <div class="context" id="context_bottom_right">
+     <span id="co2" class="value" max="0">0</span> t CO2
+  </div>
+  <div class="context" id="popup">
+  	<div id="text">
+		<b>42 tonnes de kérosène</b> en un mois,
+  		c'est autant d'énergie que<br>
+  		<b>9 000 jours</b> de clim<br>
+  		<b>1 million de jours</b> de Wi-Fi<br>
+  		<b>2 millions de jours</b> d'ampoule
+  	</div>
+  	<div id="cross" onclick="closePopup()"><a href="#">&#215;</a></div>
+  </div>
+  <div class="context" id="toggle" onclick="showPopup()"></div>
+  <div class="context" id="context_top_center">juillet</div>
+  <div class="context" id="context_bottom_center">
+  	<a target="_blank" href="https://instagram.com/laviondebernard"><img src="instagram.svg"></a>
+  	<a target="_blank" href="https://twitter.com/laviondebernard"><img src="twitter.svg"></a>
+  </div>
+  
+  <!-- Globe container -->
+  <div id="globeViz"></div>
+
+  <!-- Run script -->
+  <script>
+    altitudeStart = 2.5;
+  
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // Different altitude if mobile
+        zoomMobile = 2;
+        // Firefox for desktop seems to be slower, so specific timeout for it
+    	timeout = 2750;
+    } else {
+        zoomMobile = 1.2;
+	    if (/Firefox/i.test(navigator.userAgent)) {
+		timeout = 2400;
+	    } else {
+		timeout = 2780;
+	    }
+    }
+    
+    
+    // Initialise globe
+    let globe = Globe()
+    .backgroundColor("#000011")
+    .globeImageUrl('./earth-blue-marble.jpg')
+    .showAtmosphere(true)
+    .atmosphereColor("#442c97")
+    .atmosphereAltitude(0.25)
+    .pointOfView({ lat: (flights[0].startLat + 2*flights[0].endLat)/3 - 15, lng: (flights[0].startLng + 2*flights[0].endLng)/3 + 10, altitude: altitudeStart*zoomMobile }, 400)
+    .arcsData(flights)
+    .arcColor(() => "#9cff00")
+    .arcAltitude((e) => e.arcAlt)
+    .arcStroke(0.5)
+    .arcDashLength(99999999999999999999999999999999)
+    .arcDashGap(4)
+    .arcDashAnimateTime(2000)
+    .arcsTransitionDuration(0)
+    .arcDashInitialGap((e) => e.order * 1.4)
+    .pointColor(() => "white")
+    .pointAltitude(0.07)
+    .pointRadius(0.08)
+    .labelColor(() => "white")
+    .labelDotOrientation(() => 'right')
+    .labelText("city")
+    .labelAltitude(0.07)
+    .labelSize(1.5)
+    (document.getElementById('globeViz'));
+    
+    controls = globe.controls();
+    controls.minDistance = 190;
+    
+    // Start the trip
+    document.addEventListener('DOMContentLoaded',function(event){
+        // array with flights
+        var dataText = [];
+        var co2 = 0;
+	flights.forEach(flight => dataText.push(flight.from + " → " + flight.to))
+	flights.forEach(flight => co2 += flight.co2)
+	co2 = Math.floor(co2*10)/10;
+	
+        // iterate once for one flight
+        // keeps calling itself until the travel is over
+        function typeWriter(text, i, fnCallback) {
+          document.querySelector('#popup').style.display="block";
+          document.querySelector('#toggle').style.display="block";
+          // chekc if text isn't finished yet
+          if (i < (text.length)) {
+            // add next character
+           //document.querySelector("#context_top_center").innerHTML = text.substring(0, i+1) +'<span id="typewriter" aria-hidden="true"></span>';
+
+            // wait for a while and call this function again for next character
+            setTimeout(function() {
+              typeWriter(text, i + 1, fnCallback)
+            }, 70);
+          }
+          // text finished, call callback if there is a callback function
+          else if (typeof fnCallback == 'function') {
+            // call callback after timeout
+            setTimeout(fnCallback, timeout - text.length*70);
+          }
+        }
+        // start a typewriter animation for a text in the dataText array
+         function StartTextAnimation(i) {
+           if (i == 999){
+              setTimeout(function() {
+                StartTextAnimation(0);
+              }, 500);
+              return;
+           }
+           // end of the travel
+           if (typeof dataText[i] == 'undefined'){
+            setTimeout(function() { 
+            	document.querySelector('#popup').style.zIndex="999"
+            	document.querySelector("#context_top_center").innerHTML = "<div class='small'><a href=''><img src='reload.svg' id='reload'></a></div>";
+                document.querySelector("#context_top_right").innerHTML = flights.length + " vols";
+                document.querySelector("#context_top_left").innerHTML = owner;
+                document.querySelector("#context_bottom_right").innerHTML = co2 + " t CO2";
+            	}, 1000);
+            globe.labelsData([]).pointsData([]);
+      	    controls.autoRotateSpeed = 0.25;
+	    controls.autoRotate = true;
+            return;
+           }
+           // check if dataText[i] exists
+           if (i < dataText.length) {
+           // text exists! start typewriter animation and update globe
+           globe.pointOfView({ lat: (flights[i].startLat + 2*flights[i].endLat)/3 - 15, lng: (flights[i].startLng + 2*flights[i].endLng)/3 + 10, altitude: flights[i].zoomAlt*zoomMobile }, 3500);
+           
+           if (i == 0) {
+             globe.labelsData([{
+             "city": flights[0].from,
+             "lat": flights[0].startLat,
+             "lng": flights[0].startLng
+             },
+             {
+             "city": flights[0].to,
+             "lat": flights[0].endLat,
+             "lng": flights[0].endLng
+             }])
+            .pointsData([{
+             "city": flights[0].from,
+             "lat": flights[0].startLat,
+             "lng": flights[0].startLng
+             },
+             {
+             "city": flights[0].to,
+             "lat": flights[0].endLat,
+             "lng": flights[0].endLng
+            }]);
+           } else {
+             globe.labelsData([{
+             "city": flights[i].to,
+             "lat": flights[i].endLat,
+             "lng": flights[i].endLng
+             }])
+            .pointsData([{
+             "city": flights[i].to,
+             "lat": flights[i].endLat,
+             "lng": flights[i].endLng
+            }]);
+           }
+
+	   document.querySelector("#context_top_left").innerHTML = owner + "<div class='small'>" + flights[i].aircraft + "</div>";
+           document.querySelector("#context_top_right").innerHTML = flights[i].day;
+           document.querySelector("#co2").setAttribute("max",  +document.querySelector("#co2").innerText + flights[i].co2);
+           document.querySelector("#timeCounter").setAttribute("max",  +document.querySelector("#timeCounter").innerText + flights[i].duration);           
+           startCO2Counter(flights[i].co2);
+           startTimeCounter(flights[i].duration);
+           
+           typeWriter(dataText[i], 0, function(){
+             // after callback (and whole text has been animated), start next text
+             StartTextAnimation(i + 1);
+           });
+          }
+        }
+        // start the text animation
+        StartTextAnimation(999);
+      });
+
+    // Counters functions
+    
+    // duration of one counter iteration (one flight)
+    const duration = 2750;
+    
+    function startCO2Counter(newCO2) {
+	let counter = document.querySelector('#co2');
+	
+	   const animate = () => {
+	      const value = +counter.getAttribute('max');
+	      const data = +counter.innerText;
+	     
+	      const step = newCO2 / duration * 200;
+	      
+	      if(data + step < value) {
+	      	  x = Math.ceil((data + step)*10)/10
+		  counter.innerText = x;
+		  setTimeout(animate, 200);
+	      }
+	      else {
+		  counter.innerText = Math.ceil(value*10)/10;
+	      }
+	   }
+	   animate();
+     }
+     
+     function startTimeCounter(newTime) {
+	let counter = document.querySelector('#timeCounter');
+	
+	   const animate = () => {
+	      const value = +counter.getAttribute('max');
+	      const data = +counter.innerText;
+	     
+	      const step = newTime / duration * 200;
+	      
+	      if(data + step < value) {
+		  counter.innerText = Math.ceil((data + step)*10)/10;
+		  setTimeout(animate, 200);
+	      }
+	      else {
+		  counter.innerText = value;
+	      }
+	      document.querySelector("#time").innerText = Math.floor(counter.innerText/3600) + "h" + Math.round(counter.innerText%3600/60);
+	      
+	   }
+	   animate();
+     }
+     
+     function closePopup() {
+       	document.querySelector('#popup').style.zIndex="-999"
+      	document.querySelector('#toggle').style.zIndex="999" 
+     }
+     
+     function showPopup() {
+       	document.querySelector('#popup').style.zIndex="999"
+      	document.querySelector('#toggle').style.zIndex="-999" 
+     }
+</script>
+</body>
+</body>
+</html>
