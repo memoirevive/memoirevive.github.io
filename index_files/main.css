@@ -1,0 +1,52 @@
+@font-face {
+    font-family: 'DM Sans';
+    src: url('DMSans-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-display: swap;
+}
+html { 
+	color: black; 
+	font-family: "DM Sans"; 
+	font-size:1.15em
+}
+h1 {
+	font-size: 1.2em;
+	padding: 10px;
+	margin: 0;
+	display:inline-block;
+	max-width: 500px;
+}
+h2 {
+	font-size: 1em;
+	padding-left: 10px;
+	margin: 0;
+	display:inline-block;
+	max-width: 500px;
+}
+.text {
+	font-size: 0.8em;
+	padding-left: 10px;
+	max-width: 500px;
+}
+img {
+	padding: 10px;
+	width: calc(100% - 20px);
+	max-width: 450px;
+}
+a {
+	text-decoration: dotted underline;
+	color: black;
+}
+a:hover {
+	text-decoration: underline;
+}
+#language {
+	font-size: 0.6em;
+}
+#panel1, #panel2 {
+	min-height: 100vh;
+}
+#flex {
+	display: flex;
+	flex-wrap: wrap;
+}
