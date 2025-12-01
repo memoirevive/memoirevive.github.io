@@ -41,7 +41,7 @@ body{
   display:flex;
   align-items:center;
   gap:18px;
-  padding:26px 22px;
+  padding:36px 22px 26px;
   background:var(--blue-dark);
   border-bottom:0;
   position:relative;
@@ -56,7 +56,7 @@ body{
   background:#0000;
 }
 
-.logo{ max-width:190px; height:auto; display:block; filter:drop-shadow(0 2px 0 rgba(0,0,0,0.12)); }
+.logo{ max-width:190px; height:auto; display:block; filter:drop-shadow(0 2px 0 rgba(0,0,0,0.12)); margin-top:6px }
 .hero-text{ flex:1 }
 
 .hero h1{
@@ -243,6 +243,14 @@ body{
   .hero{ flex-direction:column; align-items:flex-start; padding:20px 16px }
   .hero h1{ font-size:30px; letter-spacing:2px }
   .intro, .editorial, .formats, .process, .pricing, .cta, .contact{ padding:0 16px; }
-  .pricing-table td{ display:block; width:100% }
+    /* On small screens keep each pricing row as a two-column layout (label/value)
+      instead of forcing every cell into a single column */
+    .pricing-table td{ display:inline-block; width:auto; border:none; padding:10px 6px }
+    .pricing-table tr{ display:flex; align-items:center; justify-content:space-between; gap:8px; border-bottom:1px solid rgba(2,27,139,0.06); padding:6px 0 }
+    /* Make the group header (rowspan supercol) display full width above the rows */
+    .pricing-table tr:first-child td.supercol,
+    .pricing-table tr.superrow td.supercol{ display:block; width:100%; grid-column:1/-1; margin-bottom:6px }
+    /* For the Total row we want the details list to sit full width under the totals */
+    .pricing-table tr.superrow td:nth-child(3){ display:block; width:100%; margin-top:8px }
   .pricing-table tbody .superrow th{ text-align:left }
 }
