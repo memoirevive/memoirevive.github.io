@@ -85,6 +85,17 @@ body{
   font-size:17px;
 }
 
+/* author intro: photo left, stacked paragraphs on the right */
+.intro-author{ display:flex; gap:18px; align-items:flex-start; }
+.intro-author .author-photo-left{ width:170px; height:auto; border-radius:8px; object-fit:cover; flex-shrink:0; box-shadow: 0 6px 18px rgba(2,27,139,0.08); }
+.intro-author .author-text{ display:flex; flex-direction:column; gap:12px; flex:1 }
+.intro-author .author-text p{ margin:0 }
+
+@media (max-width:720px){
+  .intro-author{ flex-direction:column; gap:12px; }
+  .intro-author .author-photo-left{ width:84px; align-self:center }
+}
+
 /* Section titles as yellow bars */
 .editorial, .formats, .process, .pricing, .cta, .contact{
   padding:0 22px;
@@ -215,12 +226,15 @@ body{
 
 /* Author block: photo + content */
 .author-block{ display:flex; gap:18px; align-items:flex-start; margin-top:12px }
-.author-photo{ width:120px; height:120px; object-fit:cover; border-radius:8px; border:3px solid rgba(255,255,255,0.9); box-shadow:0 6px 18px rgba(2,27,139,0.12) }
+.author-photo{ width:200px; object-fit:cover; border-radius:8px; border:3px solid rgba(255,255,255,0.9); box-shadow:0 6px 18px rgba(2,27,139,0.12) }
+.intro-author{ display:flex; gap:16px; align-items:flex-start; margin-bottom:12px }
+.author-photo-left{ width:110px; height:110px; object-fit:cover; border-radius:8px; margin-right:12px; box-shadow:0 8px 16px rgba(2,27,139,0.12); display:block }
 .author-content p{ margin-bottom:12px }
 
 @media (max-width:720px){
   .author-block{ flex-direction:column; align-items:flex-start }
   .author-photo{ width:88px; height:88px }
+  .author-photo-left{ width:88px; height:88px; display:block }
 }
 
 /* small screens */
