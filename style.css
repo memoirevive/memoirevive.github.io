@@ -156,6 +156,11 @@ body{
 /* Pricing table — poster-like, with strong blue/yellow accents */
 .pricing-table-wrap{ margin-top:12px }
 
+.pricing-columns{ display:grid; grid-template-columns:1fr 340px; gap:18px; align-items:start }
+.pricing-column{ background:linear-gradient(180deg,#fff,#fafafa); padding:12px; border-radius:8px; border:1px solid rgba(2,27,139,0.06) }
+.pricing-title{ margin:0 0 8px; font-size:15px; font-weight:900; color:var(--blue-dark); background:linear-gradient(90deg,var(--yellow),#fff); display:inline-block; padding:8px 10px }
+.tarifs-table td, .total-table td{ border:1px solid rgba(2,27,139,0.12); padding:10px 12px }
+
 .pricing-table{
   width:100%;
   border-collapse:collapse;
@@ -243,14 +248,14 @@ body{
   .hero{ flex-direction:column; align-items:flex-start; padding:20px 16px }
   .hero h1{ font-size:30px; letter-spacing:2px }
   .intro, .editorial, .formats, .process, .pricing, .cta, .contact{ padding:0 16px; }
-    /* On small screens keep each pricing row as a two-column layout (label/value)
-      instead of forcing every cell into a single column */
+    /* On small screens keep pricing columns stacked (two blocks), and keep table rows 2-col label/value */
+    .pricing-columns{ grid-template-columns:1fr; }
     .pricing-table td{ display:inline-block; width:auto; border:none; padding:10px 6px }
     .pricing-table tr{ display:flex; align-items:center; justify-content:space-between; gap:8px; border-bottom:1px solid rgba(2,27,139,0.06); padding:6px 0 }
     /* Make the group header (rowspan supercol) display full width above the rows */
     .pricing-table tr:first-child td.supercol,
     .pricing-table tr.superrow td.supercol{ display:block; width:100%; grid-column:1/-1; margin-bottom:6px }
-    /* For the Total row we want the details list to sit full width under the totals */
-    .pricing-table tr.superrow td:nth-child(3){ display:block; width:100%; margin-top:8px }
+    /* Make the total-table second row list flow cleanly */
+    .total-table tr:nth-child(2) td:nth-child(2){ display:block; width:100%; margin-top:8px }
   .pricing-table tbody .superrow th{ text-align:left }
 }
