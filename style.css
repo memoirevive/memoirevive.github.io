@@ -1,17 +1,19 @@
 :root{
-  /* Palette from references */
-  --blue-dark:#021B8B;       /* deep royal blue */
-  --blue-mid:#366DE7;        /* bright cornflower/section bar */
-  --cream:#FFF2CC;           /* paper/cream background */
-  --yellow:#FEBF00;          /* warm yellow */
-  --orange:#E87232;          /* orange accent */
+  /* Professional pastel palette - elegant and harmonious */
+  --sage-green:#A8B5A0;      /* soft sage green - natural and calming */
+  --dusty-blue:#8FA3BF;      /* muted dusty blue - sophisticated */
+  --warm-taupe:#C9B5A1;      /* warm taupe - earthy and refined */
+  --soft-terracotta:#D4A89F; /* soft terracotta - warm accent */
+  --pearl-white:#F7F5F2;     /* off-white pearl - elegant background */
+  --charcoal:#4A4E54;        /* soft charcoal - professional text */
+  --cream-beige:#EAE3D9;     /* cream beige - subtle contrast */
 
   /* App tokens */
-  --bg:var(--cream);
+  --bg:var(--pearl-white);
   --card:transparent;
-  --accent:var(--blue-dark);
-  --muted:#1f2a44;
-  --accent-2:var(--blue-mid);
+  --accent:var(--charcoal);
+  --muted:#697380;
+  --accent-2:var(--dusty-blue);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -36,13 +38,13 @@ body{
   border:0;
 }
 
-/* HERO — dark blue band with yellow title */
+/* HERO — sophisticated header with refined styling */
 .hero{
   display:flex;
   align-items:center;
   gap:18px;
   padding:36px 22px 26px;
-  background:var(--blue-dark);
+  background:var(--dusty-blue);
   border-bottom:0;
   position:relative;
 }
@@ -65,12 +67,12 @@ body{
   font-size:38px;
   font-weight:900;
   text-transform:uppercase;
-  color:var(--yellow);
+  color:var(--pearl-white);
   margin-bottom:4px;
 }
 
 .hero .lead{
-  color:#e7ecff;
+  color:var(--cream-beige);
   font-weight:700;
   letter-spacing:.4px;
     font-size:30px; 
@@ -81,13 +83,13 @@ body{
 .intro{ padding:20px 22px 0; }
 .intro p{
   margin:14px 0;
-  color:#0b1330;
+  color:var(--charcoal);
   font-size:17px;
 }
 
 /* author intro: photo left, stacked paragraphs on the right */
 .intro-author{ display:flex; gap:18px; align-items:flex-start; }
-.intro-author .author-photo-left{ width:170px; height:auto; border-radius:8px; object-fit:cover; flex-shrink:0; box-shadow: 0 6px 18px rgba(2,27,139,0.08); }
+.intro-author .author-photo-left{ width:170px; height:auto; border-radius:8px; object-fit:cover; flex-shrink:0; box-shadow: 0 6px 18px rgba(138,163,191,0.15); }
 .intro-author .author-text{ display:flex; flex-direction:column; gap:12px; flex:1 }
 .intro-author .author-text p{ margin:0 }
 
@@ -96,7 +98,7 @@ body{
   .intro-author .author-photo-left{ width:84px; align-self:center }
 }
 
-/* Section titles as yellow bars */
+/* Section titles with elegant styling */
 .editorial, .formats, .process, .pricing, .cta, .contact{
   padding:0 22px;
 }
@@ -106,29 +108,29 @@ body{
   margin-bottom:12px;
   font-size:19px;
   font-weight:900;
-  color:var(--blue-dark);
-  background:var(--yellow);
+  color:var(--pearl-white);
+  background:var(--sage-green);
   padding:8px 12px;
   border-radius:0;
   display:inline-block;
   letter-spacing:.3px;
 }
 
-/* Smaller blue subheads */
+/* Smaller refined subheads */
 .editorial h3{
   font-size:16px;
   margin-top:12px;
-  color:var(--blue-dark);
+  color:var(--dusty-blue);
   font-weight:800;
   font-style:italic;
 }
 
 .editorial p{
   margin:10px 0 16px;
-  color:#0b1330;
+  color:var(--charcoal);
 }
 
-/* Bullets as clean white strips with soft border */
+/* Bullets with elegant styling */
 .bullets{
   list-style:none;
   padding-left:0;
@@ -138,22 +140,22 @@ body{
 .bullets li{
   background:#fff;
   padding:10px 12px;
-  border-left:6px solid var(--blue-mid);
+  border-left:6px solid var(--soft-terracotta);
   border-radius:0;
   margin-bottom:10px;
-  box-shadow:0 2px 0 rgba(2,27,139,0.06);
-  color:#0b1330;
+  box-shadow:0 2px 0 rgba(138,163,191,0.08);
+  color:var(--charcoal);
 }
 
 /* Process headings */
 .process h4{
   font-size:15px;
   margin-top:12px;
-  color:var(--blue-dark);
+  color:var(--dusty-blue);
   font-weight:800;
 }
 
-/* Pricing table — poster-like, with strong blue/yellow accents */
+/* Pricing table — elegant, refined styling */
 .pricing-table-wrap{ margin-top:12px }
 
 .pricing-table{
@@ -161,30 +163,30 @@ body{
   border-collapse:collapse;
   font-size:15px;
   background:#fff;
-  border:2px solid var(--blue-dark);
+  border:2px solid var(--sage-green);
 }
 
 .pricing-table thead .superrow th,
 .pricing-table tbody .superrow th,
 .pricing-table .supercol{
   text-align:left;
-  background:var(--blue-dark);
-  color:var(--yellow);
+  background:var(--sage-green);
+  color:var(--pearl-white);
   padding:10px 12px;
   font-size:17px;
-  border:1px solid var(--blue-dark);
+  border:1px solid var(--sage-green);
   font-weight:900;
   vertical-align:middle;
 }
 
 .pricing-table td{
   padding:10px 12px;
-  border:1px solid rgba(2,27,139,0.18);
+  border:1px solid rgba(168,181,160,0.25);
   vertical-align:top;
-  color:#0b1330;
+  color:var(--charcoal);
 }
 
-.pricing-table td:first-child{ width:22%; font-weight:800; color:var(--blue-dark); background:#f8f9ff; }
+.pricing-table td:first-child{ width:22%; font-weight:800; color:var(--dusty-blue); background:#f9f8f7; }
 .pricing-table td:nth-child(2){ width:30% }
 .pricing-table td:nth-child(3){ width:auto }
 
@@ -196,10 +198,10 @@ body{
   background:#fff;
   padding:12px;
   border-radius:0;
-  border:2px solid var(--yellow);
+  border:2px solid var(--warm-taupe);
 }
 .contact a{
-  color:var(--blue-dark);
+  color:var(--dusty-blue);
   text-decoration:none;
   font-weight:800;
 }
@@ -209,7 +211,7 @@ body{
 .cta{ margin-top:22px }
 .footnote{
   font-size:13px;
-  color:#24304f;
+  color:var(--muted);
   margin-top:8px;
 }
 
@@ -217,8 +219,8 @@ body{
   text-align:center;
   margin-top:26px;
   padding-top:16px;
-  border-top:3px solid var(--blue-dark);
-  color:var(--blue-dark);
+  border-top:3px solid var(--sage-green);
+  color:var(--charcoal);
   font-size:13px;
   font-weight:700;
   background:var(--bg);
@@ -226,9 +228,9 @@ body{
 
 /* Author block: photo + content */
 .author-block{ display:flex; gap:18px; align-items:flex-start; margin-top:12px }
-.author-photo{ width:200px; object-fit:cover; border-radius:8px; border:3px solid rgba(255,255,255,0.9); box-shadow:0 6px 18px rgba(2,27,139,0.12) }
+.author-photo{ width:200px; object-fit:cover; border-radius:8px; border:3px solid rgba(255,255,255,0.9); box-shadow:0 6px 18px rgba(138,163,191,0.15) }
 .intro-author{ display:flex; gap:16px; align-items:flex-start; margin-bottom:12px }
-.author-photo-left{ width:110px; height:110px; object-fit:cover; border-radius:8px; margin-right:12px; box-shadow:0 8px 16px rgba(2,27,139,0.12); display:block }
+.author-photo-left{ width:110px; height:110px; object-fit:cover; border-radius:8px; margin-right:12px; box-shadow:0 8px 16px rgba(138,163,191,0.15); display:block }
 .author-content p{ margin-bottom:12px }
 
 @media (max-width:720px){
@@ -246,7 +248,7 @@ body{
     /* On small screens keep each pricing row as a two-column layout (label/value)
       instead of forcing every cell into a single column */
     .pricing-table td{ display:inline-block; width:auto; border:none; padding:10px 6px }
-    .pricing-table tr{ display:flex; align-items:center; justify-content:space-between; gap:8px; border-bottom:1px solid rgba(2,27,139,0.06); padding:6px 0 }
+    .pricing-table tr{ display:flex; align-items:center; justify-content:space-between; gap:8px; border-bottom:1px solid rgba(168,181,160,0.12); padding:6px 0 }
     /* Make the group header (rowspan supercol) display full width above the rows */
     .pricing-table tr:first-child td.supercol,
     .pricing-table tr.superrow td.supercol{ display:block; width:100%; grid-column:1/-1; margin-bottom:6px }
