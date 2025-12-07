@@ -1,153 +1,1375 @@
 <!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Récits sonores — Présentation</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <main class="container">
-      <header class="hero">
-        <img class="logo" src="assets/Audiographie sans fond.png" alt="Logo Récits sonores (sans fond)">
-        <div class="hero-text">
-          <h1>RECITS SONORES</h1>
-          <p class="lead">Des récits sonores sur mesure</p>
-        </div>
-      </header>
+<html lang="fr" style="scroll-behavior: smooth;">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Récits sonores</title>
+  <link rel="icon" type="image/png" href="assets/Audiographie sans fond.png" />
+  <style>
+    :root{
+      --bg: #faf8f5;
+      --card: #ffffff;
+      --ink: #2c4a62;
+      --muted: #6b7a8a;
+      --accent: #e8a87c;
+      --accent-2:#85dcb8;
+      --accent-3:#c38d9e;
+      --deep-blue: #1c375a;
+      --soft-peach: #f4d4c8;
+      --warm-apricot: #e8a87c;
+      --pale-yellow: #fef8e8;
+      --radius: 20px;
+      --shadow: 0 8px 24px rgba(28, 55, 90, 0.08), 0 2px 8px rgba(28, 55, 90, 0.04);
+      --shadow-hover: 0 12px 32px rgba(28, 55, 90, 0.12), 0 4px 12px rgba(28, 55, 90, 0.06);
+      --maxw: 980px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink); background:var(--bg); line-height:1.6;
+    }
+    .header-backdrop{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: var(--bg);
+      z-index: 8;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .header-backdrop.visible{
+      opacity: 1;
+    }
+    .scroll-header{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9;
+      background: transparent;
+      padding: 0;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+    }
+    .scroll-header.visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .scroll-header-content{
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      background: rgba(240, 248, 255, 1);
+      padding: 8px 0;
+      border-radius: 999px;
+      box-shadow: 0 2px 15px rgba(230, 242, 255, 0.3);
+      border: 1px solid rgba(230, 242, 255, 0.4);
+      width: var(--maxw);
+      max-width: var(--maxw);
+      margin-top: 6px;
+      justify-content: center;
+    }
+    .scroll-header h1{
+      margin: 0;
+      font-size: clamp(16px, 2vw, 19px);
+      font-weight: 440;
+      font-family: 'Playfair Display', Georgia, serif;
+      color: #1c375a;
+      line-height: 1;
+      white-space: nowrap;
+      font-stretch: condensed;
+    }
+    .scroll-header .sub{
+      font-size: clamp(12px, 1.1vw, 14px);
+      opacity: 0.8;
+      color: #1c375a;
+      line-height: 1;
+      white-space: nowrap;
+      margin: 0;
+    }
+    html{
+      scroll-padding-top: 120px;
+    }
+    header{
+      background: transparent;
+      padding: 4px 18px 8px;
+      position: sticky; top:44px; z-index:10;
+    }
+    nav{
+      max-width: fit-content;
+      margin: 0 auto;
+      display:flex;
+      gap:14px;
+      flex-wrap:nowrap;
+      font-size:13px;
+      color:#1c375a;
+      justify-content:center;
+      background: rgba(212, 229, 245, 1);
+      padding: 8px 20px;
+      border-radius: 999px;
+      box-shadow: 0 2px 20px rgba(212, 229, 245, 0.4);
+      border: 1px solid rgba(212, 229, 245, 0.3);
+    }
+    nav a{color:inherit; text-decoration:none; padding:4px 10px; border-radius:999px}
+    nav a:hover{background:#fff}
+    .mobile-menu-toggle{
+      display: none;
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 100;
+      background: rgba(212, 229, 245, 1);
+      border: 1px solid rgba(212, 229, 245, 0.3);
+      border-radius: 8px;
+      padding: 10px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .mobile-menu-toggle span{
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #1c375a;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+    .mobile-menu-toggle.active span:nth-child(1){
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    .mobile-menu-toggle.active span:nth-child(2){
+      opacity: 0;
+    }
+    .mobile-menu-toggle.active span:nth-child(3){
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+    .wrap{max-width:var(--maxw); margin:0 auto; padding:22px 18px 60px;}
+    .hero{
+      background:var(--card);
+      padding:48px 40px;
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      text-align:center;
+      transition: box-shadow 0.3s ease;
+    }
+    .hero-content{
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .hero img{
+      width:100%; height:340px; object-fit:cover; border-radius:14px;
+    }
+    h1{
+      margin:.2em 0 .4em;
+      font-size: clamp(36px, 4.5vw, 52px);
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      color: #0d1f2d;
+    }
+    h2{
+      margin: 48px 0 32px; 
+      font-size: clamp(22px, 2.6vw, 30px); 
+      color: #0d1f2d;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-stretch: condensed;
+      scroll-margin-top: 1px;
+    }
+    .sub{
+      color:var(--muted);
+      font-size: clamp(16px, 1.6vw, 19px);
+      line-height: 1.6;
+      margin: 16px 0;
+    }
+    .cta{
+      display:inline-block; margin-top:16px; background:var(--deep-blue); color:#fff;
+      padding:14px 28px; border-radius:12px; text-decoration:none; font-weight:600;
+      box-shadow:0 4px 12px rgba(28, 55, 90, 0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-size: 16px;
+      letter-spacing: 0.01em;
+    }
+    .cta:hover{
+      background:#0f2540;
+      box-shadow:0 6px 20px rgba(28, 55, 90, 0.3);
+      transform: translateY(-2px);
+    }
+    .grid-2{display:grid; grid-template-columns: 1fr 1fr; gap:16px;}
+    .card{
+      background:var(--card); padding:24px; border-radius:var(--radius); 
+      box-shadow:var(--shadow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card:hover{
+      box-shadow:var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+    .label{
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size:20px;
+      font-weight:600;
+      letter-spacing:0;
+      color:var(--deep-blue);
+      margin-bottom:10px;
+      text-transform:none;
+    }
+    .chips{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:20px;
+      justify-content:center;
+    }
+    .chip{
+      background:rgba(254, 248, 232, 0.6);
+      padding:10px 20px;
+      border-radius:999px;
+      font-size:15px;
+      font-weight: 500;
+      border: 1.5px solid rgba(232, 168, 124, 0.25);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: var(--ink);
+    }
+    .chip:hover{
+      background: rgba(232, 168, 124, 0.15);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(232, 168, 124, 0.2);
+    }
+    .editorial{
+      display:grid; grid-template-columns: repeat(3,1fr); gap:20px;
+    }
+    .editorial .card:nth-child(1){border-top:4px solid #1c375a}
+    .editorial .card:nth-child(2){border-top:4px solid #87CEEB}
+    .editorial .card:nth-child(3){border-top:4px solid #e8a87c}
+    .editorial-intro{
+      font-family: 'Playfair Display', Georgia, serif;
+      font-weight:600;
+      font-size:18px;
+      color:var(--deep-blue);
+      display: block;
+      margin-bottom: 8px;
+    }
 
-      <section class="intro">
-        <div class="intro-author">
-          <img class="author-photo-left" src="assets/sophie_au_micro.jpeg" alt="Sophie Hasson au micro">
-          <div class="author-text">
-            <p>En 2019, après des études de droit, j’ai créé un podcast dans lequel j’ai interviewé plus de cinquante personnes. J’ai produit 48 épisodes qui ont cumulé plus d’un million d’écoutes.</p>
-            <p>En 2024, j’ai décidé de tourner mon micro vers les membres de ma famille. J’ai commencé par mes parents puis je me suis rendue aux Etats-Unis pour interviewer mes grands-parents. En retraçant leur vie, j’ai découvert leur histoire et celle de nos ancêtres, des récits insoupçonnés et des détails que je n’aurais jamais connus autrement.</p>
-            <p>En 2025, j’ai décidé de mettre ce savoir-faire au service d’autres familles et j’ai lancé Récits sonores : des podcasts sur mesure pour enregistrer les récits familiaux, les partager dès aujourd’hui et les transmettre aux générations à venir.</p>
+    .formats{
+      position: relative;
+      padding: 0;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0;
+    }
+    .formats-container{
+      position: relative;
+      margin: 0 auto;
+      padding: 0;
+      max-width: var(--maxw);
+    }
+    .formats-carousel{
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 10px 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(232, 168, 124, 0.4) transparent;
+    }
+    .formats-carousel::-webkit-scrollbar{
+      height: 8px;
+    }
+    .formats-carousel::-webkit-scrollbar-track{
+      background: transparent;
+    }
+    .formats-carousel::-webkit-scrollbar-thumb{
+      background: rgba(232, 168, 124, 0.4);
+      border-radius: 4px;
+    }
+    .formats-carousel::-webkit-scrollbar-thumb:hover{
+      background: rgba(232, 168, 124, 0.6);
+    }
+    .formats .card{
+      min-width: calc((100% - 40px) / 3);
+      flex: 0 0 calc((100% - 40px) / 3);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .formats .card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    .formats .card:nth-child(3){
+      min-width: calc((100% - 40px) / 3);
+      flex: 0 0 calc((100% - 40px) / 3);
+    }
+    .formats .card .label{
+      font-size: 19px;
+      margin-bottom: 4px;
+      flex-shrink: 0;
+    }
+    .formats .card > p{
+      font-size: 15px;
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+    .formats .audio{
+      font-size: 13px;
+      padding: 8px;
+    }
+    .formats .example-box{
+      background: rgba(254, 251, 245, 0.8);
+      border: 1px solid rgba(232, 168, 124, 0.2);
+      border-radius: 12px;
+      padding: 14px;
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .formats .example-box strong{
+      color: #3a5a75;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .formats .example-box p{
+      font-size: 13px;
+      margin: 0 0 10px 0;
+      line-height: 1.5;
+      color: #6a8599;
+    }
+    .audio{
+      background:rgba(254, 248, 232, 0.5); 
+      padding:14px 16px; 
+      border-radius:14px; 
+      font-size:14px; 
+      color:var(--muted);
+      border: 1px solid rgba(232, 168, 124, 0.15);
+    }
+    #process{
+      padding:0 0 40px 0;
+    }
+    #process h2{
+      margin-bottom:40px;
+    }
+    .steps{
+      max-width:var(--maxw);
+      margin:0 auto;
+    }
+    .steps-container{
+      display:flex;
+      gap:24px;
+      align-items:start;
+    }
+    .steps-column{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      gap:0;
+    }
+    .steps-column:first-child .step:first-child{
+      margin-bottom:0;
+    }
+    .steps-column:first-child .step:last-child{
+      margin-top:25px;
+    }
+    .steps-column:last-child .step:first-child{
+      margin-top:35px;
+    }
+    .steps-column:last-child .step:last-child{
+      margin-top:25px;
+    }
+    .step{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      padding:24px;
+      background:var(--card);
+      border-radius:var(--radius);
+      border:1px solid rgba(28, 55, 90, 0.15);
+      box-shadow:0 4px 12px rgba(0,0,0,0.06);
+      transition:all 0.3s ease;
+    }
+    .step-header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+    .step-num{
+      width:48px;
+      height:48px;
+      background:linear-gradient(135deg, var(--deep-blue), #2a5080);
+      color:white;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      font-weight:bold;
+      flex-shrink:0;
+    }
+    .step .label{
+      font-size:20px;
+      font-weight:600;
+      color:var(--deep-blue);
+      margin:0;
+    }
+    .step:hover{
+      box-shadow:0 8px 20px rgba(0,0,0,0.1);
+      border-color:rgba(28, 55, 90, 0.25);
+      transform:translateY(-2px);
+    }
+    .step p{
+      font-size:14px;
+      line-height:1.6;
+      margin:0;
+      color:var(--muted);
+    }
+    @media(max-width:768px){
+      .mobile-menu-toggle{
+        display: block;
+        top: 8px;
+        right: 24px;
+        padding: 8px;
+        z-index: 101;
+      }
+      .mobile-menu-toggle span{
+        width: 22px;
+        height: 2px;
+        margin: 4px 0;
+      }
+      header{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 0;
+        background: transparent;
+        z-index: 99;
+        border-bottom: 2px solid #1c375a;
+      }
+      nav{
+        position: fixed;
+        top: 0;
+        left: auto;
+        right: 0;
+        bottom: 0;
+        width: 280px;
+        background: rgba(240, 248, 255, 0.95);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 80px 20px 20px;
+        gap: 8px;
+        border-radius: 0;
+        box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        overflow-y: auto;
+        visibility: hidden;
+      }
+      nav.active{
+        transform: translateX(0);
+        visibility: visible;
+      }
+      nav a{
+        padding: 14px 20px;
+        font-size: 16px;
+        border-radius: 12px;
+        background: rgba(212, 229, 245, 0.9);
+        margin: 0;
+      }
+      nav a:hover{
+        background: rgba(255, 255, 255, 0.95);
+      }
+      html{
+        scroll-padding-top: 60px;
+      }
+      .scroll-header{
+        display: none;
+      }
+      h2{
+        position: sticky;
+        top: 0;
+        background: var(--bg);
+        z-index: 98;
+        padding: 16px 20px;
+        padding-left: 145px;
+        margin: 24px 0;
+        font-size: 20px;
+        border-bottom: none;
+        transition: border-bottom 0.3s ease;
+      }
+      h2.is-sticky{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 3px solid #1c375a;
+        padding-left: 20px;
+      }
+      h2.is-sticky::before{
+        content: "Récits sonores";
+        font-size: 16px;
+        font-weight: 440;
+        color: var(--muted);
+        font-family: 'Playfair Display', Georgia, serif;
+        padding-right: 8px;
+        margin-right: 8px;
+        border-right: 2px solid var(--muted);
+        font-stretch: condensed;
+      }
+      .header-backdrop{
+        display: none;
+      }
+      .wrap{
+        padding-top: 60px;
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+      body{
+        font-size: 16px;
+        line-height: 1.7;
+      }
+      .main-content{
+        display: flex;
+        flex-direction: column;
+      }
+      .section-hero{
+        order: 1;
+        display: none;
+      }
+      .section-sophie{
+        order: 2;
+      }
+      .section-ligne{
+        order: 3;
+      }
+      #formats{
+        order: 4;
+      }
+      #process{
+        order: 5;
+      }
+      #forfaits{
+        order: 6;
+      }
+      #contact{
+        order: 7;
+        text-align: center;
+      }
+      .hero-image-mobile{
+        display: block !important;
+        order: 1;
+        position: relative;
+        margin: 0 -16px 0;
+        padding: 0;
+        height: 100vh;
+        overflow: hidden;
+        --border-scale: 0;
+      }
+      .hero-image-mobile::after{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: calc(3px * var(--border-scale));
+        background: #1c375a;
+        z-index: 10;
+        transform-origin: left;
+        transition: height 0.1s linear;
+      }
+      .hero-image-mobile img{
+        width: 100%;
+        height: 70vh;
+        object-fit: cover;
+        display: block;
+        border-radius: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: transform 0.1s ease-out, border-radius 0.3s ease;
+      }
+      .hero-image-mobile .hero-overlay{
+        position: absolute;
+        bottom: 20vh;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        padding: 0 20px;
+        text-align: center;
+        z-index: 2;
+        transition: transform 0.1s ease-out;
+        min-height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        top: 40vh;
+      }
+      .hero-image-mobile h1{
+        color: var(--deep-blue);
+        font-size: clamp(24px, 6vw, 30px);
+        margin: 0;
+        font-weight: 600;
+      }
+      .hero-image-mobile .sub{
+        color: var(--ink);
+        font-size: clamp(15px, 4vw, 18px);
+        margin: 0;
+        line-height: 1.5;
+      }
+      .image-decorative-desktop{
+        display: none !important;
+      }
+      .section-hero{
+        display: none;
+      }
+      .hero{
+        padding: 24px 20px;
+      }
+      .hero img{
+        height: 220px;
+      }
+      .hero .sub{
+        font-size: 17px;
+      }
+      h1{
+        font-size: clamp(26px, 7vw, 34px);
+      }
+      .card p{
+        font-size: 16px;
+        line-height: 1.7;
+      }
+      .label{
+        font-size: 18px;
+      }
+      .editorial-intro{
+        font-size: 17px;
+      }
+      .step p{
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      .step .label{
+        font-size: 16px;
+      }
+      .steps-container{
+        flex-direction: column;
+        gap: 16px;
+      }
+      .steps-column{
+        width: 100%;
+        gap: 16px;
+        display: contents;
+      }
+      .step{
+        order: 0;
+      }
+      .step[data-step="1"]{
+        order: 1;
+      }
+      .step[data-step="2"]{
+        order: 2;
+      }
+      .step[data-step="3"]{
+        order: 3;
+      }
+      .step[data-step="4"]{
+        order: 4;
+      }
+      .steps-column:first-child{
+        gap: 16px;
+      }
+      .steps-column:first-child .step:last-child{
+        margin-bottom: 0;
+      }
+      .steps-column:first-child .step:last-child,
+      .steps-column:last-child .step:first-child,
+      .steps-column:last-child .step:last-child{
+        margin-top: 0;
+      }
+      .step{
+        padding: 20px;
+      }
+      .step-num{
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+      .pricing-grid{
+        flex-direction: column;
+        gap: 16px;
+      }
+      .pricing-card{
+        width: 100%;
+      }
+      .pricing-card:nth-child(2){
+        flex-grow: 1;
+      }
+      .pricing-card h3{
+        font-size: 18px;
+      }
+      .pricing-item{
+        padding: 10px 0;
+      }
+      .pricing-icon{
+        width: 28px;
+        height: 28px;
+        font-size: 13px;
+      }
+      .pricing-detail{
+        font-size: 14px;
+      }
+      .sophie-container{
+        display: flex !important;
+        flex-direction: column !important;
+      }
+      .sophie-title{
+        display: block !important;
+        margin-bottom: 20px;
+      }
+      .sophie-photo{
+        order: 1;
+        width: 100% !important;
+        height: auto !important;
+        max-width: 300px;
+        margin: 0 auto 16px !important;
+        float: none !important;
+      }
+      .sophie-text{
+        order: 2;
+      }
+      #sophie .card{
+        display: flex !important;
+        flex-direction: column;
+      }
+      #sophie .card img{
+        position: relative;
+        transition: none;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+      .steps-container{
+        grid-template-columns:1fr;
+      }
+      .step:nth-child(2), .step:nth-child(4){
+        margin-top:0;
+      }
+      .mentions-legales{
+        order: 999;
+        padding: 20px 16px 30px !important;
+      }
+    }
+    table{
+      width:100%; border-collapse:separate; border-spacing:0 8px; font-size:15px;
+    }
+    .pricing-grid{
+      display:flex;
+      flex-wrap:nowrap;
+      gap:20px;
+      margin:24px 0;
+      align-items:flex-start;
+    }
+    .pricing-card{
+      background:var(--card);
+      padding:18px;
+      border-radius:var(--radius);
+      border:2px solid var(--soft-peach);
+      box-shadow:var(--shadow);
+      flex:1 1 0;
+      min-width:0;
+    }
+    .pricing-card:nth-child(2){
+      flex-grow:1.5;
+    }
+    .pricing-card h3{
+      font-family: 'Playfair Display', Georgia, serif;
+      color:var(--deep-blue);
+      font-size:16px;
+      margin:0 0 12px;
+      font-weight:600;
+    }
+    .pricing-item{
+      display:flex;
+      gap:12px;
+      padding:12px 0;
+      border-bottom:1px solid var(--soft-peach);
+    }
+    .pricing-item:last-child{
+      border-bottom:none;
+    }
+    .pricing-icon{
+      flex-shrink:0;
+      width:24px;
+      height:24px;
+      border-radius:50%;
+      background:var(--warm-apricot);
+      display:grid;
+      place-items:center;
+      font-weight:600;
+      color:var(--deep-blue);
+      font-size:12px;
+    }
+    .pricing-detail{
+      flex:1;
+      font-size:13px;
+      line-height:1.5;
+    }
+    .pricing-detail strong{
+      color:var(--deep-blue);
+      font-weight:600;
+    }
+    .price-highlight{
+      background:var(--pale-yellow);
+      padding:20px;
+      border-radius:var(--radius);
+      margin:20px 0;
+      border-left:4px solid var(--deep-blue);
+    }
+    .price-highlight p{
+      margin:8px 0;
+      font-size:16px;
+    }
+    .price-highlight strong{
+      color:var(--deep-blue);
+      font-size:18px;
+    }
+    .price-examples{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      gap:16px;
+      margin-top:16px;
+    }
+    .price-example{
+      background:white;
+      padding:16px;
+      border-radius:8px;
+      text-align:center;
+      border:1px solid var(--soft-peach);
+    }
+    .price-example .episodes{
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size:20px;
+      font-weight:600;
+      color:var(--deep-blue);
+      margin-bottom:8px;
+    }
+    .price-example .range{
+      color:var(--muted);
+      font-size:15px;
+    }
+    td{
+      background:var(--pale-yellow); padding:10px 12px; border-radius:10px;
+    }
+    footer{
+      margin-top:26px; background:var(--card); padding:18px; border-radius:var(--radius); box-shadow:var(--shadow);
+      text-align:center;
+    }
+    @media (max-width: 900px){
+      .hero{grid-template-columns:1fr;}
+      .grid-2{grid-template-columns:1fr;}
+      .editorial{
+        grid-template-columns:1fr;
+        gap: 12px;
+      }
+      .editorial .card{
+        padding: 16px;
+        font-size: 14px;
+      }
+      .editorial-intro{
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+      .formats{grid-template-columns:1fr;}
+      .formats-container{
+        padding: 0;
+      }
+      .formats-carousel{
+        flex-direction: column;
+        overflow-x: visible;
+        overflow-y: visible;
+        padding: 0;
+        gap: 16px;
+      }
+      .formats .card{
+        min-width: 100%;
+        max-width: 100%;
+        flex: 0 0 auto;
+      }
+      .formats .card:nth-child(3){
+        min-width: 100%;
+        max-width: 100%;
+        flex: 0 0 auto;
+      }
+      .carousel-arrow svg{
+        width: 20px;
+        height: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="header-backdrop" id="headerBackdrop"></div>
+<div class="scroll-header" id="scrollHeader">
+  <div class="scroll-header-content">
+    <h1>Récits sonores</h1>
+    <p class="sub">Des podcasts sur mesure racontant votre histoire et celle de vos proches.</p>
+  </div>
+</div>
+
+<header>
+  <button class="mobile-menu-toggle" id="menuToggle" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+  <nav id="mainNav">
+    <a href="#sophie">Votre intervieweuse</a>
+    <a href="#ligne">Votre récit sonore</a>
+    <a href="#formats">Les formats</a>
+    <a href="#process">Les étapes</a>
+    <a href="#forfaits">Les forfaits</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main class="wrap main-content">
+
+  <!-- HERO -->
+  <section class="hero section-hero" id="top">
+    <div class="hero-content">
+      <h1>Récits sonores</h1>
+      <p class="sub">Des podcasts sur mesure racontant votre histoire et celle de vos proches.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SOPHIE -->
+  <section id="sophie" class="section-sophie" style="margin-top:18px;">
+    <h2 class="sophie-title" style="display:none;">Votre intervieweuse</h2>
+    <div class="card sophie-container" style="display:grid; grid-template-columns: 240px 1fr; gap:24px; align-items:start;">
+      <img src="assets/sophie_au_micro.jpeg" alt="Sophie Hasson au micro" class="sophie-photo" style="width:100%; height:100%; object-fit:cover; border-radius:12px; box-shadow:0 4px 16px rgba(0,0,0,0.08);">
+      <div class="sophie-text">
+        <p style="margin-bottom:16px;"><strong>Sophie Hasson</strong> est juriste de formation et créatrice sonore.</p>
+        
+        <p style="margin-bottom:16px;"><strong>En 2019</strong>, à l'issue de ses études de droit, elle crée un podcast dans lequel elle a interviewé plus de cinquante personnes. Elle a produit 48 épisodes qui cumulent plus d'un million d'écoutes.</p>
+        
+        <p style="margin-bottom:16px;"><strong>En 2024</strong>, elle décide de tourner son micro vers ses proches. Elle enregistre d'abord ses parents, puis se rend aux États-Unis pour interviewer ses grands-parents. En retraçant leur vie, elle découvre leur histoire et celle de leurs ancêtres : des récits insoupçonnés, des souvenirs enfouis, des détails qu'elle n'aurait jamais connus autrement.</p>
+        
+        <p><strong>En 2025</strong>, elle choisit de mettre ce savoir-faire au service d'autres familles et d'autres histoires. Elle lance <em>Récits sonores</em> : des podcasts réalisés sur mesure, pour recueillir vos récits et ceux de vos proches.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- LIGNE EDITORIALE -->
+  <section id="ligne" class="section-ligne">
+    <h2>Votre récit sonore</h2>
+    <div class="editorial">
+      <div class="card">
+        <p><span class="editorial-intro">Enregistrez vos histoires</span>Je guide l'interview afin de faire émerger les récits, pour permettre à chacun de parler à sa manière et à son rythme.</p>
+      </div>
+      <div class="card">
+        <p><span class="editorial-intro">Des podcasts sur mesure</span>Je crée des podcasts uniques, fidèle à l'histoire, aux personnes et à leurs parcours.</p>
+      </div>
+      <div class="card">
+        <p><span class="editorial-intro">Une mise en lumière de chaque récit</span>Les questions disparaissent et laissent la voix au 1er plan. Le récit est rythmé et accompagné d'un habillage sonore sur mesure.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FORMATS -->
+  <section id="formats">
+    <h2>Les formats proposés</h2>
+    <div class="formats">
+      <div class="formats-container">
+        <div class="formats-carousel" id="formatsCarousel">
+          <div class="card">
+            <div class="label">Portrait</div>
+            <p>Le récit est centré autour d'une personne : son parcours, ses expériences marquantes, sa manière de voir le monde.</p>
+            <div class="example-box">
+              <p>A 100 ans, Francine m'a accueilli dans la chambre de sa maison de retraite à Bordeaux. Ses 3 enfants, 5 petits-enfants et 4 arrière-petit-enfants ont découverts une série de 3 épisodes dans laquelle Francine raconte l'histoire de ses ancêtres, sa naissance en Syrie à son arrivée en France en 1945.</p>
+              <div class="audio">
+                <strong>Ecoutez un extrait</strong>
+                <iframe src="https://embed.acast.com/692bc34ef3d8e925c6a912fc/6930b2480c2b3ca2d87a8f7e?font-family=Roboto&font-src=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto" frameBorder="0" width="100%" height="80px"></iframe>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="label">Voix croisées</div>
+            <p>Les récits de plusieurs sont entrelacés pour faire apparaître une mémoire commune depuis des points de vue différents.</p>
+            <div class="example-box">
+              <p>Depuis le salon japonais de leur appartement parisien, Carol et Xavier, un couple franco-américain, racontent à deux voix leur rencontre à 19 ans dans la Californie des années en 70, et leurs aventures dans la décennie qui a suivi.</p>
+              <div class="audio">
+                <strong>Ecoutez un extrait</strong>
+                <iframe src="https://embed.acast.com/692bc34ef3d8e925c6a912fc/6930b755042629ee0ebb5549?font-family=Roboto&font-src=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto" frameBorder="0" width="100%" height="80px"></iframe>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="label">Étape de vie</div>
+            <p>Mariage, naissance, anniversaire ... offrez (vous) un podcast pour marquer les moments importants.</p>
+            <div class="example-box">
+              <p>Une famille raconte l'histoire de Nadia, une enfant placée chez eux, qui les a marqués chacun à leur manière.</p>
+              <div class="audio">
+                <strong>Ecoutez un extrait</strong>
+                <iframe src="https://embed.acast.com/692bc34ef3d8e925c6a912fc/6930bf13fb6ea8e378359f78?font-family=Roboto&font-src=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto" frameBorder="0" width="100%" height="80px"></iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMAGE DECORATIVE -->
+  <div class="hero-image-mobile" style="display:none;">
+    <img src="assets/Designer.png" alt="Design illustration">
+    <div class="hero-overlay">
+      <h1>Récits sonores</h1>
+      <p class="sub">Des podcasts sur mesure racontant votre histoire et celle de vos proches.</p>
+    </div>
+  </div>
+  <div class="image-decorative-desktop" style="max-width:var(--maxw); margin:48px auto; padding:0 18px;">
+    <img src="assets/Designer.png" alt="Design illustration" style="width:100%; max-width:650px; height:auto; border-radius:20px; box-shadow:var(--shadow); display:block; margin:0 auto;">
+  </div>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <h2>Comment ça se passe ?</h2>
+    <div class="steps">
+      <div class="steps-container">
+        <div class="steps-column">
+          <div class="step" data-step="1">
+            <div class="step-header">
+              <div class="step-num">1</div>
+              <div class="label">Faisons connaissance</div>
+            </div>
+            <p>On commence par un temps d'échange pour se rencontrer et définir ensemble les contours du projet en fonction de vos envies. </p>
+          </div>
+
+          <div class="step" data-step="3">
+            <div class="step-header">
+              <div class="step-num">3</div>
+              <div class="label">Création de vos épisodes sur mesure</div>
+            </div>
+            <p> Les interviews sont transformés en un ou plusieurs épisodes de 20 à 40 minutes chacun. <br> Chaque épisode est narré, rythmé, accompagné d'un habillage sonore.</p> 
           </div>
         </div>
 
-         </section>
-
-      <section class="editorial">
-        <h2>Ligne éditoriale</h2>
-
-        <h3>Une écoute attentive</h3>
-        <p>Les interviews sont individuelles. Je guide la conversation avec douceur et bienveillance, pour permettre à chacun de parler librement, à son rythme.</p>
-
-        <h3>Des épisodes sur mesure</h3>
-        <p>À l’image de chacun. Selon le hasard des souvenirs et les mille manières de les raconter, je m’adapte à chaque récit, créant des podcasts uniques, fidèle à la personne et à son parcours.</p>
-
-        <h3>Une mise en lumière de chaque histoire</h3>
-        <p>Les questions disparaissent pour laisser la voix au premier plan, portée par une narration et un habillage sonore sur mesure (archives, musiques).</p>
-      </section>
-
-      <section class="formats">
-        <h2>Formats proposés</h2>
-
-        <ul class="bullets">
-          <li>
-            <strong>Portrait :</strong> un récit est centré autour d’une personne, son parcours, ses expériences marquantes, sa manière de voir le monde.
-          </li>
-        </ul>
-
-        <p>A 100 ans, Francine m’a accueilli dans la chambre de sa maison de retraite à Bordeaux. Ses trois enfants, cinq petits-enfants et quatre arrière-petits-enfants ont découverts une série de 3 épisodes : Des chrétiens à Alep, Une enfance paradisiaque, Le bouleversement de la Guerre. Francine y raconte sa vie - de sa naissance en Syrie en 1924 à son arrivée en France en 1945.</p>
-
-        <ul class="bullets">
-          <li>
-            <strong>Voix croisées :</strong> plusieurs personnes répondent séparément aux mêmes questions, par un montage croisé, leurs récits sont entrelacés pour faire apparaître une mémoire commune depuis des points de vue différents.
-          </li>
-        </ul>
-
-        <p>Depuis le salon japonais de leur appartement parisien, Carol et Xavier, racontent à deux voix leur rencontre à 19 ans dans la Californie des années en 70, et leurs aventures dans la décennie qui a suivi.</p>
-      </section>
-
-      <section class="process">
-        <h2>Votre récit sonore</h2>
-
-        <h3>Comment ça se passe ?</h3>
-
-        <h4>Faisons connaissance</h4>
-        <p>Avant d’enregistrer, on prend le temps d’échanger pour mieux se connaître et définir un thème. On peut choisir une approche : chronologique - par exemple de l’enfance à la rencontre -, ou thématique - rapport à l’art, traditions familiales, projets...</p>
-
-        <h4>Les interviews</h4>
-        <p>Nous fixons la date et le lieu. Je peux venir avec mon matériel dans le lieu de votre choix, ou vous recevoir dans le nord-est de Paris. Une interview peut varier entre 45 minutes et 2h selon la personne et le projet.</p>
-
-        <h4>Vos épisodes sur mesure</h4>
-        <p>A partir des interviews, je réalise une série de plusieurs épisodes de 20 à 40 minutes chacun - rythmés, narrés et accompagnés d’illustrations sonores sur mesure (de vos musiques favorites, ou de l’époque, archives sonores). Vous recevrez aussi l’enregistrement brut de l’interview.</p>
-
-        <h4>Ecouter, partager et conserver</h4>
-        <p>L’ensemble des personnes intéressées recevront un lien – par mail ou via un groupe Whatsapp dédié. Ce lien donne accès à un site pour écouter les épisodes en ligne, les partager aux proches, les télécharger, les conserver et les transmettre aux prochaines générations.</p>
-      </section>
-
-      <section class="pricing">
-        <h2>Forfaits</h2>
-
-        <div class="pricing-columns">
-          <div class="pricing-column">
-            <h3 class="pricing-title">Tarifs (indicatifs)</h3>
-            <table class="pricing-table tarifs-table" summary="Tarifs indicatifs">
-              <tbody>
-                <tr>
-                  <td>Préparation et interview</td>
-                  <td>Entre ½ et 1 ½ jour par série</td>
-                </tr>
-                <tr>
-                  <td>Dérushage</td>
-                  <td>Entre ½ et 1 jour par épisode</td>
-                </tr>
-                <tr>
-                  <td>Montage</td>
-                  <td>Entre 1 jour et 1½ par épisode</td>
-                </tr>
-                <tr>
-                  <td>Restitution du podcast</td>
-                  <td>½ jour par série</td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="steps-column">
+          <div class="step" data-step="2">
+            <div class="step-header">
+              <div class="step-num">2</div>
+              <div class="label">L'enregistrement des interviews</div>
+            </div>
+            <p>Nous nous retrouvons dans le lieu de votre choix ou dans le nord-est de Paris. <br> Une interview peut varier entre 45 minutes et 2h selon le projet.</p>
           </div>
 
-          <div class="pricing-column">
-            <h3 class="pricing-title">Total</h3>
-            <table class="pricing-table total-table" summary="Total forfaits">
-              <tbody>
-                <tr>
-                  <td>Total</td>
-                  <td>300 € / jours</td>
-                </tr>
-                <tr>
-                  <td>Pour une série de :</td>
-                  <td>
-                    <ul>
-                      <li>3 épisodes : compter entre 1 650 et 2 850 €</li>
-                      <li>5 épisodes : compter entre 2 400 et 3 150 €</li>
-                    </ul>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="step" data-step="4">
+            <div class="step-header">
+              <div class="step-num">4</div>
+              <div class="label">Ecoutez, partagez et conservez précieusement vos histoires</div>
+            </div>
+            <p>L'ensemble des personnes intéressées reçoivent – par mail ou via un groupe Whatsapp dédié - un lien donnant accès à un site privé d'écoute en ligne et de téléchargement. <br> Une transmission par clef USB est également possible.</p>
           </div>
         </div>
-      </section>
+      </div>
+      <p style="margin-top:32px; padding:20px; background:rgba(254, 248, 232, 0.5); border-left:4px solid var(--deep-blue); border-radius:12px; font-size:15px; line-height:1.7; color:var(--ink); max-width:800px; margin-left:0; text-align:left;">
+        <strong style="color:var(--deep-blue);">Note :</strong> Vous recevrez également les enregistrements bruts non édités.
+      </p>
+    </div>
+  </section>
 
-      <section class="cta">
-        <h2>Et maintenant ?</h2>
 
-        <div class="author-block">
-          <div class="author-content">
-            <p>Ecrivez-moi sur WhatsApp ou par mail en me racontant votre projet et vos envies. Je répondrai à vos questions, vous transmettrai un devis et les infos sur les prochaines étapes !</p>
+  <!-- FORFAITS -->
+  <section id="forfaits" style="scroll-margin-top:5px;">
+    <h2>Les forfaits</h2>
+    
+    <p class="sub" style="font-size: clamp(14px, 1.4vw, 16px); line-height: 1.7; color: #5a5250;">Chaque audiographie est une création originale.<br> Les tarifs ci-dessous sont indicatifs et varient selon le nombre d'épisodes, la complexité du montage et les besoins spécifiques <span style="color: var(--deep-blue); font-weight: 500;">(tarif journalier : 300€/jour)</span>.</p>
 
-            <address class="contact">
-              <strong>Sophie Hasson</strong><br>
-              06.70.91.21.91<br>
-              <a href="mailto:soph.hasson@gmail.com">soph.hasson@gmail.com</a>
-            </address>
+    <div class="pricing-grid">
+      
+      <div class="pricing-card">
+        <h3>Phase de préparation</h3>
+        <div class="pricing-item">
+          <div class="pricing-icon">1</div>
+          <div class="pricing-detail">
+            <strong>Entretien de rencontre</strong><br>
+            Préparation et interview<br>
+            <em>½ à 2 jours par série</em>
           </div>
         </div>
+      </div>
 
-      </section>
+      <div class="pricing-card">
+        <h3>Phase de production</h3>
+        <div class="pricing-item">
+          <div class="pricing-icon">2</div>
+          <div class="pricing-detail">
+            <strong>Dérushage</strong><br>
+            Transcription et sélection des extraits<br>
+            <em>½ à 1 jour par épisode</em>
+          </div>
+        </div>
+        <div class="pricing-item">
+          <div class="pricing-icon">3</div>
+          <div class="pricing-detail">
+            <strong>Montage & habillage</strong><br>
+            Montage, narration, musiques<br>
+            <em>1 à 2 jours par épisode</em>
+          </div>
+        </div>
+      </div>
 
-      <footer class="footer">&copy; Récits sonores — Sophie Hasson</footer>
-    </main>
-  </body>
+      <div class="pricing-card">
+        <h3>Phase de restitution</h3>
+        <div class="pricing-item">
+          <div class="pricing-icon">4</div>
+          <div class="pricing-detail">
+            <strong>Livraison & partage</strong><br>
+            Création du site privé, liens de téléchargement<br>
+            <em>½ à 1 jour par série</em>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="price-highlight" style="margin-top:16px;">
+      <p style="font-size:15px; line-height:1.6; font-weight:500; margin-bottom:20px;">
+        Un devis personnalisé - adapté au projet et aux besoins spécifiques - sera établi dès notre premier échange.
+      </p>
+      
+      <p style="margin-bottom:0; font-size:12px; color:var(--muted); font-style:italic;">
+        À titre indicatif : • 3 épisodes entre 1 500€ et 3 500€ • 5 épisodes entre 2 300€ et 5 400€
+      </p>
+    </div>
+  </section>
+
+<!-- CONTACT -->
+  <section id="contact">
+    <footer>
+      <h2 style="margin-top:0;">Contactez-moi</h2>
+      <p style="margin-bottom:32px; font-size:16px; line-height:1.7; color:var(--muted);">Racontez-moi votre projet et vos envies. <br>Je reviendrai vers vous sous peu, pour répondre à vos questions, établir un devis et vous transmettres les informations sur les prochaines étapes !</p>
+      
+      <form action="https://formspree.io/f/xldqljno" method="POST" style="max-width:600px; margin:0 auto; text-align:left;">
+        <div style="margin-bottom:20px;">
+          <label for="prenom" style="display:block; margin-bottom:8px; font-weight:500; color:var(--deep-blue); font-size:15px;">Prénom *</label>
+          <input type="text" id="prenom" name="prenom" required style="width:100%; padding:14px 16px; border:2px solid rgba(28, 55, 90, 0.15); border-radius:10px; font-size:15px; font-family:inherit; transition:all 0.3s ease;" onfocus="this.style.borderColor='var(--deep-blue)'; this.style.boxShadow='0 0 0 3px rgba(28, 55, 90, 0.08)'" onblur="this.style.borderColor='rgba(28, 55, 90, 0.15)'; this.style.boxShadow='none'">
+        </div>
+        
+        <div style="margin-bottom:20px;">
+          <label for="nom" style="display:block; margin-bottom:8px; font-weight:500; color:var(--deep-blue); font-size:15px;">Nom *</label>
+          <input type="text" id="nom" name="nom" required style="width:100%; padding:14px 16px; border:2px solid rgba(28, 55, 90, 0.15); border-radius:10px; font-size:15px; font-family:inherit; transition:all 0.3s ease;" onfocus="this.style.borderColor='var(--deep-blue)'; this.style.boxShadow='0 0 0 3px rgba(28, 55, 90, 0.08)'" onblur="this.style.borderColor='rgba(28, 55, 90, 0.15)'; this.style.boxShadow='none'">
+        </div>
+        
+        <div style="margin-bottom:20px;">
+          <label for="email" style="display:block; margin-bottom:8px; font-weight:500; color:var(--deep-blue); font-size:15px;">Email *</label>
+          <input type="email" id="email" name="email" required style="width:100%; padding:14px 16px; border:2px solid rgba(28, 55, 90, 0.15); border-radius:10px; font-size:15px; font-family:inherit; transition:all 0.3s ease;" onfocus="this.style.borderColor='var(--deep-blue)'; this.style.boxShadow='0 0 0 3px rgba(28, 55, 90, 0.08)'" onblur="this.style.borderColor='rgba(28, 55, 90, 0.15)'; this.style.boxShadow='none'">
+        </div>
+        
+        <div style="margin-bottom:20px;">
+          <label for="telephone" style="display:block; margin-bottom:8px; font-weight:500; color:var(--deep-blue); font-size:15px;">Numéro de téléphone</label>
+          <input type="tel" id="telephone" name="telephone" style="width:100%; padding:14px 16px; border:2px solid rgba(28, 55, 90, 0.15); border-radius:10px; font-size:15px; font-family:inherit; transition:all 0.3s ease;" onfocus="this.style.borderColor='var(--deep-blue)'; this.style.boxShadow='0 0 0 3px rgba(28, 55, 90, 0.08)'" onblur="this.style.borderColor='rgba(28, 55, 90, 0.15)'; this.style.boxShadow='none'">
+        </div>
+        
+        <div style="margin-bottom:24px;">
+          <label for="projet" style="display:block; margin-bottom:8px; font-weight:500; color:var(--deep-blue); font-size:15px;">Votre projet *</label>
+          <textarea id="projet" name="projet" required rows="5" style="width:100%; padding:14px 16px; border:2px solid rgba(28, 55, 90, 0.15); border-radius:10px; font-size:15px; font-family:inherit; resize:vertical; transition:all 0.3s ease;" placeholder="Décrivez-moi votre projet..." onfocus="this.style.borderColor='var(--deep-blue)'; this.style.boxShadow='0 0 0 3px rgba(28, 55, 90, 0.08)'" onblur="this.style.borderColor='rgba(28, 55, 90, 0.15)'; this.style.boxShadow='none'"></textarea>
+        </div>
+        
+        <button type="submit" style="width:100%; padding:16px; background:var(--deep-blue); color:white; border:none; border-radius:10px; font-size:16px; font-weight:600; cursor:pointer; transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow:0 4px 12px rgba(28, 55, 90, 0.2);" onmouseover="this.style.background='#0f2540'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(28, 55, 90, 0.3)'" onmouseout="this.style.background='var(--deep-blue)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(28, 55, 90, 0.2)'">
+          Envoyer
+        </button>
+      </form>
+    </footer>
+  </section>
+
+  <!-- Mentions légales en dehors du cadre -->
+  <div class="mentions-legales" style="display:flex; justify-content:center; align-items:flex-start; gap:20px; padding:40px 20px; max-width:500px; margin:0 auto;">
+    <img src="assets/Audiographies récits sonores.png" alt="Audiographies Récits sonores" style="width:100px; border-radius:8px; border:3px solid #1c375a; flex-shrink:0;">
+    <div style="text-align:left;">
+      <h3 style="font-size:14px; margin-bottom:8px; color:var(--deep-blue);">Mentions légales</h3>
+      <p style="font-size:12px; color:var(--muted); line-height:1.5; margin:0;">
+        Site édité par Sophie Hasson, auto-entreprise.<br>
+        Hébergement : GitHub Pages<br>
+        Contact : via le formulaire ci-dessus
+      </p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // Menu mobile
+  (function() {
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    
+    if (!menuToggle || !mainNav) return;
+    
+    menuToggle.addEventListener('click', function() {
+      menuToggle.classList.toggle('active');
+      mainNav.classList.toggle('active');
+    });
+    
+    // Fermer le menu quand on clique sur un lien
+    const navLinks = mainNav.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      });
+    });
+    
+    // Fermer le menu quand on clique en dehors
+    document.addEventListener('click', function(e) {
+      if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
+        menuToggle.classList.remove('active');
+        mainNav.classList.remove('active');
+      }
+    });
+  })();
+
+  // Carrousel des formats
+  (function() {
+    const carousel = document.getElementById('formatsCarousel');
+    
+    if (!carousel) return;
+    
+    // Clic sur une carte pour la centrer
+    const cards = carousel.querySelectorAll('.card');
+    cards.forEach(function(card) {
+      card.addEventListener('click', function() {
+        const cardLeft = card.offsetLeft;
+        const cardWidth = card.offsetWidth;
+        const carouselWidth = carousel.clientWidth;
+        const scrollTo = cardLeft - (carouselWidth / 2) + (cardWidth / 2);
+        
+        carousel.scrollTo({ left: scrollTo, behavior: 'smooth' });
+      });
+    });
+  })();
+
+  // Afficher l'en-tête scrollable après avoir dépassé le titre principal
+  window.addEventListener('scroll', function() {
+    const scrollHeader = document.getElementById('scrollHeader');
+    const headerBackdrop = document.getElementById('headerBackdrop');
+    const heroSection = document.querySelector('.hero');
+    const ligneSection = document.getElementById('ligne');
+    
+    if (heroSection) {
+      const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+      
+      if (window.scrollY > heroBottom - 50) {
+        scrollHeader.classList.add('visible');
+      } else {
+        scrollHeader.classList.remove('visible');
+      }
+    }
+    
+    // Apparition progressive du backdrop entre la biographie et "Votre récit sonore"
+    if (ligneSection) {
+      const sophieSection = document.getElementById('sophie');
+      const ligneTop = ligneSection.offsetTop;
+      
+      if (sophieSection) {
+        const sophieTop = sophieSection.offsetTop;
+        const startPoint = sophieTop - 100;
+        const endPoint = ligneTop - 150;
+        const fadeDistance = endPoint - startPoint;
+        
+        if (window.scrollY >= startPoint && window.scrollY <= endPoint) {
+          const scrolled = window.scrollY - startPoint;
+          const opacity = Math.min(scrolled / fadeDistance, 1);
+          headerBackdrop.style.opacity = opacity;
+        } else if (window.scrollY > endPoint) {
+          headerBackdrop.style.opacity = 1;
+        } else {
+          headerBackdrop.style.opacity = 0;
+        }
+      }
+    }
+  });
+
+  // Détection du sticky pour les h2 en mobile
+  if (window.innerWidth <= 768) {
+    const h2Elements = document.querySelectorAll('h2');
+    
+    const stickyObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          // Quand le h2 atteint le top (sticky activé), entry.intersectionRatio < 1
+          if (entry.intersectionRatio < 1 && entry.boundingClientRect.top <= 1) {
+            entry.target.classList.add('is-sticky');
+          } else {
+            entry.target.classList.remove('is-sticky');
+          }
+        });
+      },
+      { 
+        threshold: [1],
+        rootMargin: '-1px 0px 0px 0px'
+      }
+    );
+
+    h2Elements.forEach(h2 => {
+      stickyObserver.observe(h2);
+    });
+
+    // Animation hero mobile : image s'efface et texte remonte
+    const heroMobile = document.querySelector('.hero-image-mobile');
+    if (heroMobile) {
+      const heroImg = heroMobile.querySelector('img');
+      const heroOverlay = heroMobile.querySelector('.hero-overlay');
+      
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        const heroHeight = heroMobile.offsetHeight;
+        
+        // Calculer le pourcentage de scroll (0 à 1)
+        const scrollPercent = Math.min(scrolled / (heroHeight * 0.5), 1);
+        
+        // Faire apparaître progressivement la bordure bleue (via pseudo-élément)
+        // On utilise un style CSS personnalisé
+        if (scrollPercent > 0.3) { // Commence à apparaître après 30% de scroll
+          heroMobile.style.setProperty('--border-scale', Math.min((scrollPercent - 0.3) / 0.7, 1));
+        } else {
+          heroMobile.style.setProperty('--border-scale', 0);
+        }
+        
+        // L'image reste fixe et opaque (pas de transparence)
+        if (heroImg) {
+          heroImg.style.transform = 'translateY(0)';
+          heroImg.style.opacity = 1;
+        }
+        
+        // Le texte descend lentement sans transparence (vitesse 0.5x)
+        if (heroOverlay) {
+          const translateY = scrolled * 0.5;
+          heroOverlay.style.transform = `translateY(${translateY}px)`;
+          heroOverlay.style.opacity = 1;
+        }
+      });
+    }
+  }
+</script>
+</body>
 </html>
