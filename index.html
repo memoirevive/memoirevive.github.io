@@ -574,7 +574,7 @@
         display: flex !important;
         order: 1;
         position: relative;
-        background: linear-gradient(135deg, rgba(240, 248, 255, 0.9) 0%, rgba(254, 248, 232, 0.6) 100%);
+        background: var(--bg);
         min-height: 100vh;
         flex-direction: column;
         align-items: center;
@@ -582,14 +582,13 @@
         margin: 0 -16px 0;
         text-align: center;
         border-bottom: 3px solid var(--deep-blue);
-        box-shadow: 0 4px 20px rgba(28, 55, 90, 0.08);
         overflow: hidden;
         padding: 24px 24px 80px;
       }
       .hero-mobile-content{
-        transition: transform 0.1s ease-out;
         width: 100%;
         max-width: 500px;
+        will-change: transform;
       }
       .scroll-indicator{
         position: absolute;
@@ -599,22 +598,24 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
-        opacity: 1;
+        gap: 10px;
+        opacity: 0.85;
         animation: bounce 2s infinite;
+        z-index: 10;
       }
       .scroll-indicator-text{
         font-size: 14px;
         color: var(--deep-blue);
-        font-weight: 600;
-        letter-spacing: 0.5px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
       }
       .scroll-indicator-arrow{
-        width: 28px;
-        height: 28px;
-        border-left: 3px solid var(--deep-blue);
-        border-bottom: 3px solid var(--deep-blue);
+        width: 24px;
+        height: 24px;
+        border-left: 2px solid var(--deep-blue);
+        border-bottom: 2px solid var(--deep-blue);
         transform: rotate(-45deg);
+        opacity: 0.7;
       }
       @keyframes bounce {
         0%, 20%, 50%, 80%, 100% {
@@ -1354,23 +1355,34 @@
       const heroContent = heroMobile.querySelector('.hero-mobile-content');
       const scrollIndicator = heroMobile.querySelector('.scroll-indicator');
       const heroHeight = heroMobile.offsetHeight;
+      let ticking = false;
+
+      function updateScroll(scrolled) {
+        // Calculer le déplacement (le titre descend à la même vitesse que le scroll)
+        // Le titre disparaît complètement une fois qu'on a scrollé de la hauteur du hero
+        if (scrolled <= heroHeight) {
+          const translateY = Math.round(scrolled * 0.8); // 0.8 pour un effet plus doux, arrondi pour éviter les tremblements
+          heroContent.style.transform = `translate3d(0, ${translateY}px, 0)`;
+
+          // Faire disparaître l'indicateur de scroll progressivement
+          if (scrollIndicator) {
+            const opacity = Math.max(0, 0.85 - (scrolled / 200));
+            scrollIndicator.style.opacity = opacity;
+          }
+        }
+        ticking = false;
+      }
 
       window.addEventListener('scroll', () => {
         const scrolled = window.scrollY;
 
-        // Calculer le déplacement (le titre descend à la même vitesse que le scroll)
-        // Le titre disparaît complètement une fois qu'on a scrollé de la hauteur du hero
-        if (scrolled <= heroHeight) {
-          const translateY = scrolled * 0.8; // 0.8 pour un effet plus doux
-          heroContent.style.transform = `translateY(${translateY}px)`;
-
-          // Faire disparaître l'indicateur de scroll progressivement
-          if (scrollIndicator) {
-            const opacity = Math.max(0, 1 - (scrolled / 200));
-            scrollIndicator.style.opacity = opacity;
-          }
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            updateScroll(scrolled);
+          });
+          ticking = true;
         }
-      });
+      }, { passive: true });
     }
   }
 </script>
