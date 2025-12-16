@@ -494,7 +494,7 @@
         background: rgba(255, 255, 255, 0.95);
       }
       html{
-        scroll-padding-top: 60px;
+        scroll-padding-top: 0;
       }
       .scroll-header{
         display: none;
@@ -506,6 +506,7 @@
         z-index: 98;
         padding: 16px 20px;
         padding-left: 145px;
+        padding-right: 70px;
         margin: 24px 0;
         font-size: 20px;
         border-bottom: none;
@@ -517,6 +518,7 @@
         gap: 8px;
         border-bottom: 3px solid #1c375a;
         padding-left: 20px;
+        padding-right: 70px;
       }
       h2.is-sticky::before{
         content: "Récits sonores";
@@ -550,10 +552,10 @@
         display: none;
       }
       .section-sophie{
-        order: 2;
+        order: 3;
       }
       .section-ligne{
-        order: 3;
+        order: 2;
       }
       #formats{
         order: 4;
@@ -568,66 +570,79 @@
         order: 7;
         text-align: center;
       }
-      .hero-image-mobile{
-        display: block !important;
+      .hero-mobile{
+        display: flex !important;
         order: 1;
         position: relative;
+        background: linear-gradient(135deg, rgba(240, 248, 255, 0.9) 0%, rgba(254, 248, 232, 0.6) 100%);
+        min-height: 100vh;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         margin: 0 -16px 0;
-        padding: 0;
-        height: 100vh;
-        overflow: hidden;
-        --border-scale: 0;
-      }
-      .hero-image-mobile::after{
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: calc(3px * var(--border-scale));
-        background: #1c375a;
-        z-index: 10;
-        transform-origin: left;
-        transition: height 0.1s linear;
-      }
-      .hero-image-mobile img{
-        width: 100%;
-        height: 70vh;
-        object-fit: cover;
-        display: block;
-        border-radius: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        transition: transform 0.1s ease-out, border-radius 0.3s ease;
-      }
-      .hero-image-mobile .hero-overlay{
-        position: absolute;
-        bottom: 20vh;
-        left: 0;
-        right: 0;
-        background: var(--bg);
-        padding: 0 20px;
         text-align: center;
-        z-index: 2;
+        border-bottom: 3px solid var(--deep-blue);
+        box-shadow: 0 4px 20px rgba(28, 55, 90, 0.08);
+        overflow: hidden;
+        padding: 24px 24px 80px;
+      }
+      .hero-mobile-content{
         transition: transform 0.1s ease-out;
-        min-height: auto;
+        width: 100%;
+        max-width: 500px;
+      }
+      .scroll-indicator{
+        position: absolute;
+        bottom: 60px;
+        left: 50%;
+        transform: translateX(-50%);
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        top: 40vh;
+        align-items: center;
+        gap: 8px;
+        opacity: 1;
+        animation: bounce 2s infinite;
       }
-      .hero-image-mobile h1{
+      .scroll-indicator-text{
+        font-size: 14px;
         color: var(--deep-blue);
-        font-size: clamp(24px, 6vw, 30px);
-        margin: 0;
         font-weight: 600;
+        letter-spacing: 0.5px;
       }
-      .hero-image-mobile .sub{
+      .scroll-indicator-arrow{
+        width: 28px;
+        height: 28px;
+        border-left: 3px solid var(--deep-blue);
+        border-bottom: 3px solid var(--deep-blue);
+        transform: rotate(-45deg);
+      }
+      @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        40% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+        60% {
+          transform: translateX(-50%) translateY(-5px);
+        }
+      }
+      .hero-mobile h1{
+        color: var(--deep-blue);
+        font-size: clamp(28px, 7vw, 36px);
+        margin: 0 0 16px 0;
+        font-weight: 600;
+        font-family: 'Playfair Display', Georgia, serif;
+        letter-spacing: -0.02em;
+        line-height: 1.2;
+      }
+      .hero-mobile .sub{
         color: var(--ink);
-        font-size: clamp(15px, 4vw, 18px);
+        font-size: clamp(16px, 4.5vw, 19px);
         margin: 0;
-        line-height: 1.5;
+        line-height: 1.6;
+        max-width: 500px;
+        margin: 0 auto;
       }
       .image-decorative-desktop{
         display: none !important;
@@ -936,8 +951,8 @@
     <span></span>
   </button>
   <nav id="mainNav">
-    <a href="#sophie">Votre intervieweuse</a>
     <a href="#ligne">Votre récit sonore</a>
+    <a href="#sophie">Votre intervieweuse</a>
     <a href="#formats">Les formats</a>
     <a href="#process">Les étapes</a>
     <a href="#forfaits">Les forfaits</a>
@@ -956,6 +971,17 @@
     </div>
   </section>
 
+  <!-- HERO MOBILE -->
+  <div class="hero-mobile" style="display:none;">
+    <div class="hero-mobile-content">
+      <h1>Récits sonores</h1>
+      <p class="sub">Des podcasts sur mesure racontant votre histoire et celle de vos proches.</p>
+    </div>
+    <div class="scroll-indicator">
+      <span class="scroll-indicator-text">Votre récit sonore</span>
+      <div class="scroll-indicator-arrow"></div>
+    </div>
+  </div>
 
   <!-- SOPHIE -->
   <section id="sophie" class="section-sophie" style="margin-top:18px;">
@@ -980,10 +1006,10 @@
     <h2>Votre récit sonore</h2>
     <div class="editorial">
       <div class="card">
-        <p><span class="editorial-intro">Enregistrez vos histoires</span>Je guide l'interview afin de faire émerger les récits, pour permettre à chacun de parler à sa manière et à son rythme.</p>
+        <p><span class="editorial-intro">Des interviews guidées</span>Je guide l'interview et m'adapte au rythme de chaucun pour faire émerger les récits.</p>
       </div>
       <div class="card">
-        <p><span class="editorial-intro">Des podcasts sur mesure</span>Je crée des podcasts uniques, fidèle à l'histoire, aux personnes et à leurs parcours.</p>
+        <p><span class="editorial-intro">Des podcasts sur mesure</span>Pour chaque récit, j'imagine une forme qui reflète ses particularités (durée, découpage, habillage sonore...).</p>
       </div>
       <div class="card">
         <p><span class="editorial-intro">Une mise en lumière de chaque récit</span>Les questions disparaissent et laissent la voix au 1er plan. Le récit est rythmé et accompagné d'un habillage sonore sur mesure.</p>
@@ -1002,7 +1028,7 @@
             <div class="label">Portrait</div>
             <p>Le récit est centré autour d'une personne : son parcours, ses expériences marquantes, sa manière de voir le monde.</p>
             <div class="example-box">
-              <p>A 100 ans, Francine m'a accueilli dans la chambre de sa maison de retraite à Bordeaux. Ses 3 enfants, 5 petits-enfants et 4 arrière-petit-enfants ont découverts une série de 3 épisodes dans laquelle Francine raconte l'histoire de ses ancêtres, sa naissance en Syrie à son arrivée en France en 1945.</p>
+              <p>A 100 ans, Claudine m'a accueilli dans la chambre de sa maison de retraite à Bordeaux. Ses 3 enfants, 5 petits-enfants et 4 arrière-petit-enfants ont découvert une série de 3 épisodes dans laquelle Claudine raconte l'histoire de ses ancêtres, sa naissance en Syrie en 1924 à son arrivée en France en 1945.</p>
               <div class="audio">
                 <strong>Ecoutez un extrait</strong>
                 <iframe src="https://embed.acast.com/692bc34ef3d8e925c6a912fc/6930b2480c2b3ca2d87a8f7e?font-family=Roboto&font-src=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto" frameBorder="0" width="100%" height="80px"></iframe>
@@ -1014,10 +1040,10 @@
             <div class="label">Voix croisées</div>
             <p>Les récits de plusieurs sont entrelacés pour faire apparaître une mémoire commune depuis des points de vue différents.</p>
             <div class="example-box">
-              <p>Depuis le salon japonais de leur appartement parisien, Carol et Xavier, un couple franco-américain, racontent à deux voix leur rencontre à 19 ans dans la Californie des années en 70, et leurs aventures dans la décennie qui a suivi.</p>
+              <p> Pascal et Julia se replongent dans le souvenir de leur première rencontre, dans une salle de cinéma à Chicago, il y a trente-cinq ans.</p>
               <div class="audio">
                 <strong>Ecoutez un extrait</strong>
-                <iframe src="https://embed.acast.com/692bc34ef3d8e925c6a912fc/6930b755042629ee0ebb5549?font-family=Roboto&font-src=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto" frameBorder="0" width="100%" height="80px"></iframe>
+                <iframe src="https://embed.acast.com/692bc34ef3d8e925c6a912fc/693f4ee59278bf5c1c02cdbe?font-family=Roboto&font-src=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DRoboto" frameBorder="0" width="100%" height="80px"></iframe>
               </div>
             </div>
           </div>
@@ -1038,21 +1064,9 @@
     </div>
   </section>
 
-  <!-- IMAGE DECORATIVE -->
-  <div class="hero-image-mobile" style="display:none;">
-    <img src="assets/Designer.png" alt="Design illustration">
-    <div class="hero-overlay">
-      <h1>Récits sonores</h1>
-      <p class="sub">Des podcasts sur mesure racontant votre histoire et celle de vos proches.</p>
-    </div>
-  </div>
-  <div class="image-decorative-desktop" style="max-width:var(--maxw); margin:48px auto; padding:0 18px;">
-    <img src="assets/Designer.png" alt="Design illustration" style="width:100%; max-width:650px; height:auto; border-radius:20px; box-shadow:var(--shadow); display:block; margin:0 auto;">
-  </div>
-
   <!-- PROCESS -->
   <section id="process">
-    <h2>Comment ça se passe ?</h2>
+    <h2>Les étapes</h2>
     <div class="steps">
       <div class="steps-container">
         <div class="steps-column">
@@ -1124,7 +1138,7 @@
           <div class="pricing-icon">2</div>
           <div class="pricing-detail">
             <strong>Dérushage</strong><br>
-            Transcription et sélection des extraits<br>
+            Suppression des silences, hésitations et mots parasites.<br>
             <em>½ à 1 jour par épisode</em>
           </div>
         </div>
@@ -1158,7 +1172,7 @@
       </p>
       
       <p style="margin-bottom:0; font-size:12px; color:var(--muted); font-style:italic;">
-        À titre indicatif : • 3 épisodes entre 1 500€ et 3 500€ • 5 épisodes entre 2 300€ et 5 400€
+        À titre indicatif : • 3 épisodes à partir de 1 500€ • 5 épisodes à partir de 2 000€
       </p>
     </div>
   </section>
@@ -1222,14 +1236,14 @@
   (function() {
     const menuToggle = document.getElementById('menuToggle');
     const mainNav = document.getElementById('mainNav');
-    
+
     if (!menuToggle || !mainNav) return;
-    
+
     menuToggle.addEventListener('click', function() {
       menuToggle.classList.toggle('active');
       mainNav.classList.toggle('active');
     });
-    
+
     // Fermer le menu quand on clique sur un lien
     const navLinks = mainNav.querySelectorAll('a');
     navLinks.forEach(function(link) {
@@ -1238,7 +1252,7 @@
         mainNav.classList.remove('active');
       });
     });
-    
+
     // Fermer le menu quand on clique en dehors
     document.addEventListener('click', function(e) {
       if (!mainNav.contains(e.target) && !menuToggle.contains(e.target)) {
@@ -1334,38 +1348,27 @@
       stickyObserver.observe(h2);
     });
 
-    // Animation hero mobile : image s'efface et texte remonte
-    const heroMobile = document.querySelector('.hero-image-mobile');
+    // Animation hero mobile : glissement du titre vers le bas
+    const heroMobile = document.querySelector('.hero-mobile');
     if (heroMobile) {
-      const heroImg = heroMobile.querySelector('img');
-      const heroOverlay = heroMobile.querySelector('.hero-overlay');
-      
+      const heroContent = heroMobile.querySelector('.hero-mobile-content');
+      const scrollIndicator = heroMobile.querySelector('.scroll-indicator');
+      const heroHeight = heroMobile.offsetHeight;
+
       window.addEventListener('scroll', () => {
         const scrolled = window.scrollY;
-        const heroHeight = heroMobile.offsetHeight;
-        
-        // Calculer le pourcentage de scroll (0 à 1)
-        const scrollPercent = Math.min(scrolled / (heroHeight * 0.5), 1);
-        
-        // Faire apparaître progressivement la bordure bleue (via pseudo-élément)
-        // On utilise un style CSS personnalisé
-        if (scrollPercent > 0.3) { // Commence à apparaître après 30% de scroll
-          heroMobile.style.setProperty('--border-scale', Math.min((scrollPercent - 0.3) / 0.7, 1));
-        } else {
-          heroMobile.style.setProperty('--border-scale', 0);
-        }
-        
-        // L'image reste fixe et opaque (pas de transparence)
-        if (heroImg) {
-          heroImg.style.transform = 'translateY(0)';
-          heroImg.style.opacity = 1;
-        }
-        
-        // Le texte descend lentement sans transparence (vitesse 0.5x)
-        if (heroOverlay) {
-          const translateY = scrolled * 0.5;
-          heroOverlay.style.transform = `translateY(${translateY}px)`;
-          heroOverlay.style.opacity = 1;
+
+        // Calculer le déplacement (le titre descend à la même vitesse que le scroll)
+        // Le titre disparaît complètement une fois qu'on a scrollé de la hauteur du hero
+        if (scrolled <= heroHeight) {
+          const translateY = scrolled * 0.8; // 0.8 pour un effet plus doux
+          heroContent.style.transform = `translateY(${translateY}px)`;
+
+          // Faire disparaître l'indicateur de scroll progressivement
+          if (scrollIndicator) {
+            const opacity = Math.max(0, 1 - (scrolled / 200));
+            scrollIndicator.style.opacity = opacity;
+          }
         }
       });
     }
