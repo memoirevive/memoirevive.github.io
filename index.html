@@ -575,7 +575,8 @@
         order: 1;
         position: relative;
         background: var(--bg);
-        min-height: 100vh;
+        height: 100vh;
+        max-height: 100vh;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
@@ -583,7 +584,8 @@
         text-align: center;
         border-bottom: 3px solid var(--deep-blue);
         overflow: hidden;
-        padding: 120px 24px 120px;
+        padding: 100px 24px 80px;
+        box-sizing: border-box;
       }
       .hero-mobile-content{
         width: 100%;
