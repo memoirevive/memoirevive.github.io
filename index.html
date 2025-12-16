@@ -588,7 +588,6 @@
       .hero-mobile-content{
         width: 100%;
         max-width: 500px;
-        will-change: transform;
       }
       .scroll-indicator{
         position: absolute;
@@ -1349,26 +1348,18 @@
       stickyObserver.observe(h2);
     });
 
-    // Animation hero mobile : glissement du titre vers le bas
+    // Animation hero mobile : faire disparaître l'indicateur de scroll
     const heroMobile = document.querySelector('.hero-mobile');
     if (heroMobile) {
-      const heroContent = heroMobile.querySelector('.hero-mobile-content');
       const scrollIndicator = heroMobile.querySelector('.scroll-indicator');
-      const heroHeight = heroMobile.offsetHeight;
       let ticking = false;
 
       function updateScroll(scrolled) {
-        // Calculer le déplacement (le titre descend à la même vitesse que le scroll)
-        // Le titre disparaît complètement une fois qu'on a scrollé de la hauteur du hero
-        if (scrolled <= heroHeight) {
-          const translateY = Math.round(scrolled * 0.8); // 0.8 pour un effet plus doux, arrondi pour éviter les tremblements
-          heroContent.style.transform = `translate3d(0, ${translateY}px, 0)`;
-
-          // Faire disparaître l'indicateur de scroll progressivement
-          if (scrollIndicator) {
-            const opacity = Math.max(0, 0.85 - (scrolled / 200));
-            scrollIndicator.style.opacity = opacity;
-          }
+        // Faire disparaître l'indicateur de scroll progressivement
+        if (scrollIndicator && scrolled <= 400) {
+          // L'indicateur reste à 0.85 jusqu'à 100px, puis disparaît progressivement
+          const opacity = scrolled < 100 ? 0.85 : Math.max(0, 0.85 - ((scrolled - 100) / 300));
+          scrollIndicator.style.opacity = opacity;
         }
         ticking = false;
       }
