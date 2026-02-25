@@ -1,6 +1,0 @@
-[[redirects]]
-  from = "/clients/*"
-  to = "/login.html"
-  status = 302
-  conditions = {Role = ["client"]}
-  force = false
