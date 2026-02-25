@@ -1459,6 +1459,13 @@
       netlifyIdentity.open();
     }
   });
+  netlifyIdentity.on("login", function(user) {
+    const emailToFolder = {
+      'sophie_hasson@hotmail.fr': 'bernadette'
+    };
+    const folder = emailToFolder[user.email] || user.email.split('@')[0];
+    window.location.href = '/clients/' + folder + '/';
+  });
 </script>
 </body>
 </html>
