@@ -39,8 +39,16 @@
   <p>Votre histoire familiale, contée par ceux qui l'ont vécue</p>
   <button onclick="netlifyIdentity.open()">Accéder à mon espace</button>
   <script>
+    if (window.location.hash.includes('invite_token') || window.location.hash.includes('recovery_token')) {
+      netlifyIdentity.open();
+    }
+
     netlifyIdentity.on('login', function(user) {
-      window.location.href = '/clients/' + user.email.split('@')[0] + '/';
+      const emailToFolder = {
+        'sophie_hasson@hotmail.fr': 'bernadette'
+      };
+      const folder = emailToFolder[user.email] || user.email.split('@')[0];
+      window.location.href = '/clients/' + folder + '/';
     });
   </script>
 </body>
