@@ -1452,5 +1452,13 @@
     }
   }
 </script>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  netlifyIdentity.on("init", function() {
+    if (window.location.hash.includes("invite_token") || window.location.hash.includes("recovery_token")) {
+      netlifyIdentity.open();
+    }
+  });
+</script>
 </body>
 </html>
