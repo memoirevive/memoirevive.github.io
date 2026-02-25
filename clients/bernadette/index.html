@@ -3,58 +3,69 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mémoire Vive — L'espace de Bernadette</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <title>Le récit de Bernadette — Mémoire Vive</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Georgia, serif; background-color: #f9f5f0; color: #3d3530; max-width: 700px; margin: 0 auto; padding: 3rem 2rem; }
     header { text-align: center; margin-bottom: 3rem; border-bottom: 1px solid #d9cfc8; padding-bottom: 2rem; }
     header h1 { font-size: 1.6rem; font-weight: normal; letter-spacing: 0.05em; }
-    header p { font-style: italic; color: #7a6f68; margin-top: 0.5rem; }
+    header p { font-style: italic; color: #7a6f68; margin-top: 0.5rem; line-height: 1.7; }
     section { margin-bottom: 2.5rem; }
-    h2 { font-size: 1rem; font-weight: normal; letter-spacing: 0.1em; text-transform: uppercase; color: #7a6f68; margin-bottom: 1rem; }
-    .intro { font-style: italic; line-height: 1.8; color: #5a4f48; }
-    audio { width: 100%; margin-top: 0.5rem; }
-    .fichiers a { display: block; padding: 0.7rem 1rem; background: #ede8e2; margin-bottom: 0.5rem; text-decoration: none; color: #3d3530; }
+    h2 { font-size: 0.85rem; font-weight: normal; letter-spacing: 0.12em; text-transform: uppercase; color: #7a6f68; margin-bottom: 1.2rem; border-bottom: 1px solid #e0d8d0; padding-bottom: 0.5rem; }
+    .episode { margin-bottom: 2rem; }
+    .episode h3 { font-size: 1rem; font-weight: normal; font-style: italic; margin-bottom: 0.5rem; color: #3d3530; }
+    audio { width: 100%; margin-bottom: 0.4rem; }
+    .download-audio { font-size: 0.85rem; color: #7a6f68; text-decoration: none; }
+    .download-audio:hover { color: #3d3530; }
+    .fichiers a { display: block; padding: 0.7rem 1rem; background: #ede8e2; margin-bottom: 0.5rem; text-decoration: none; color: #3d3530; font-size: 0.95rem; }
     .fichiers a:hover { background: #d9cfc8; }
-    footer { text-align: center; margin-top: 4rem; font-size: 0.85rem; color: #b0a89f; font-style: italic; }
-    .logout { text-align: right; margin-bottom: 1rem; }
-    .logout button { background: none; border: none; color: #b0a89f; font-family: Georgia, serif; font-size: 0.85rem; cursor: pointer; text-decoration: underline; }
+    footer { text-align: center; margin-top: 4rem; font-size: 0.85rem; color: #b0a89f; font-style: italic; border-top: 1px solid #d9cfc8; padding-top: 2rem; }
+    a.retour { display: inline-block; margin-top: 2rem; font-size: 0.85rem; color: #b0a89f; text-decoration: none; }
+    a.retour:hover { color: #7a6f68; }
   </style>
 </head>
 <body>
-  <div class="logout">
-    <button onclick="netlifyIdentity.logout()">Se déconnecter</button>
-  </div>
   <header>
-    <h1>L'espace de Bernadette</h1>
-    <p>Vos souvenirs, pour toujours</p>
+    <h1>Le récit de Bernadette</h1>
+    <p>Bernadette vous raconte ses récits et ses souvenirs.<br>À écouter seul ou en famille. Bonne écoute.</p>
   </header>
+
   <section>
-    <h2>Un mot de Sophie</h2>
-    <p class="intro">Chère Bernadette, c'est avec beaucoup d'émotion que je vous confie ici le fruit de nos conversations. Votre voix, vos récits, vos silences aussi — tout cela est maintenant préservé pour ceux qui vous aiment.</p>
-  </section>
-  <section>
-    <h2>Votre portrait sonore</h2>
-    <audio controls>
-      <source src="portrait-bernadette.mp3" type="audio/mpeg">
-    </audio>
-  </section>
-  <section>
-    <h2>Vos fichiers</h2>
-    <div class="fichiers">
-      <a href="transcription-bernadette.pdf" download>📄 Transcription</a>
-      <a href="livret-bernadette.pdf" download>📖 Livret numérique</a>
+    <h2>Le portrait sonore</h2>
+    <div class="episode">
+      <h3>Épisode 1 — [Titre à compléter]</h3>
+      <audio controls>
+        <source src="episode-01.mp3" type="audio/mpeg">
+      </audio>
+      <a class="download-audio" href="episode-01.mp3" download>↓ Télécharger cet épisode</a>
+    </div>
+    <div class="episode">
+      <h3>Épisode 2 — [Titre à compléter]</h3>
+      <audio controls>
+        <source src="episode-02.mp3" type="audio/mpeg">
+      </audio>
+      <a class="download-audio" href="episode-02.mp3" download>↓ Télécharger cet épisode</a>
+    </div>
+    <div class="episode">
+      <h3>Épisode 3 — [Titre à compléter]</h3>
+      <audio controls>
+        <source src="episode-03.mp3" type="audio/mpeg">
+      </audio>
+      <a class="download-audio" href="episode-03.mp3" download>↓ Télécharger cet épisode</a>
     </div>
   </section>
-  <footer>Mémoire Vive — Votre histoire familiale, contée par ceux qui l'ont vécue</footer>
-  <script>
-    netlifyIdentity.on('init', function(user) {
-      if (!user) { window.location.href = '/login.html'; }
-    });
-    netlifyIdentity.on('logout', function() {
-      window.location.href = '/login.html';
-    });
-  </script>
+
+  <section>
+    <h2>Les archives</h2>
+    <div class="fichiers">
+      <a href="interviews-integraux.mp3" download>🎙 Les interviews intégraux</a>
+      <a href="livret-bernadette.pdf" download>📖 Le livret</a>
+      <a href="transcription-bernadette.pdf" download>📄 La transcription</a>
+    </div>
+  </section>
+
+  <footer>
+    Mémoire Vive — Votre histoire familiale, contée par ceux qui l'ont vécue
+  </footer>
 </body>
 </html>
