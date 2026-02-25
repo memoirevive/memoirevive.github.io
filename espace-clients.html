@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mémoire Vive — Accéder à mon récit</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Georgia, serif;
+      background-color: #f9f5f0;
+      color: #3d3530;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 { font-size: 1.8rem; font-weight: normal; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    p { font-size: 1rem; color: #7a6f68; margin-bottom: 2rem; font-style: italic; }
+    input {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      padding: 0.8rem 1rem;
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      border: 1px solid #c9b99a;
+      background: #fff;
+      color: #3d3530;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    input:focus { outline: none; border-color: #3d3530; }
+    button {
+      background-color: #3d3530;
+      color: #f9f5f0;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+    }
+    button:hover { background-color: #7a6f68; }
+    .erreur { color: #a0522d; font-style: italic; margin-top: 1rem; font-size: 0.9rem; display: none; }
+    a.retour { display: inline-block; margin-top: 2rem; font-size: 0.85rem; color: #7a6f68; text-decoration: none; }
+    a.retour:hover { color: #3d3530; }
+  </style>
+</head>
+<body>
+  <h1>Mémoire Vive</h1>
+  <p>Entrez le code qui vous a été transmis<br>pour accéder à votre récit.</p>
+  <input type="password" id="motdepasse" placeholder="Votre code personnel" />
+  <button onclick="acceder()">Accéder</button>
+  <p class="erreur" id="erreur">Code incorrect. Vérifiez les majuscules.</p>
+  <a href="/" class="retour">← Retour au site</a>
+  <script>
+    const portraits = {
+      "Bernadette1934": "/clients/bernadette/"
+    };
+    function acceder() {
+      const mdp = document.getElementById("motdepasse").value;
+      if (portraits[mdp]) {
+        window.location.href = portraits[mdp];
+      } else {
+        document.getElementById("erreur").style.display = "block";
+      }
+    }
+    document.getElementById("motdepasse").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") acceder();
+    });
+  </script>
+</body>
+</html>
